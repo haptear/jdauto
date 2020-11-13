@@ -1,6 +1,6 @@
 /*
-东东水果:脚本更新地址 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js
-更新时间：2020-11-09
+东东水果:脚本更新地址 https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_fruit.js
+更新时间：2020-11-10
 东东农场活动链接：https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -9,16 +9,16 @@
 ==========================Quantumultx=========================
 [task_local]
 #jd免费水果
-5 6-18/6 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js, tag=东东农场, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png, enabled=true
+5 6-18/6 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_fruit.js, tag=东东农场, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png, enabled=true
 =========================Loon=============================
 [Script]
-cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js,tag=东东农场
+cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_fruit.js,tag=东东农场
 
 =========================Surge============================
-东东农场 = type=cron,cronexp="5 6-18/6 * * *",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js
+东东农场 = type=cron,cronexp="5 6-18/6 * * *",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_fruit.js
 
 =========================小火箭===========================
-东东农场 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js, cronexpr="5 6-18/6 * * *", timeout=200, enable=true
+东东农场 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_fruit.js, cronexpr="5 6-18/6 * * *", timeout=200, enable=true
 
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
 */
@@ -57,8 +57,12 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        } else {
+          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        }
         continue
       }
       message = '';
@@ -646,20 +650,22 @@ async function masterHelpShare() {
       console.log(`助力失败::${JSON.stringify($.helpResult)}`);
     }
   }
-  let helpSuccessPeoplesKey = timeFormat() + $.farmInfo.farmUserPro.shareCode;
-  if (!$.getdata(helpSuccessPeoplesKey)) {
-    //把前一天的清除
-    $.setdata('', timeFormat(Date.now() - 24 * 60 * 60 * 1000) + $.farmInfo.farmUserPro.shareCode);
-    $.setdata('', helpSuccessPeoplesKey);
-  }
-  if (helpSuccessPeoples) {
-    if ($.getdata(helpSuccessPeoplesKey)) {
-      $.setdata($.getdata(helpSuccessPeoplesKey) + ',' + helpSuccessPeoples, helpSuccessPeoplesKey);
-    } else {
-      $.setdata(helpSuccessPeoples, helpSuccessPeoplesKey);
+  if ($.isLoon() || $.isQuanX() || $.isSurge()) {
+    let helpSuccessPeoplesKey = timeFormat() + $.farmInfo.farmUserPro.shareCode;
+    if (!$.getdata(helpSuccessPeoplesKey)) {
+      //把前一天的清除
+      $.setdata('', timeFormat(Date.now() - 24 * 60 * 60 * 1000) + $.farmInfo.farmUserPro.shareCode);
+      $.setdata('', helpSuccessPeoplesKey);
     }
+    if (helpSuccessPeoples) {
+      if ($.getdata(helpSuccessPeoplesKey)) {
+        $.setdata($.getdata(helpSuccessPeoplesKey) + ',' + helpSuccessPeoples, helpSuccessPeoplesKey);
+      } else {
+        $.setdata(helpSuccessPeoples, helpSuccessPeoplesKey);
+      }
+    }
+    helpSuccessPeoples = $.getdata(helpSuccessPeoplesKey);
   }
-  helpSuccessPeoples = $.getdata(helpSuccessPeoplesKey);
   if (helpSuccessPeoples && helpSuccessPeoples.length > 0) {
     message += `【您助力的好友👬】${helpSuccessPeoples.substr(0, helpSuccessPeoples.length - 1)}\n`;
   }

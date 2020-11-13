@@ -1,5 +1,5 @@
 /*
-京东摇钱树 ：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js
+京东摇钱树 ：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_moneyTree.js
 更新时间：2020-11-07
 京东摇钱树支持京东双账号
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
@@ -7,12 +7,12 @@
 // quantumultx
 // [task_local]
 // #京东摇钱树
-// 3 */2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js, tag=京东摇钱树, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png, enabled=true
+// 3 */2 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_moneyTree.js, tag=京东摇钱树, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png, enabled=true
 // Loon
 // [Script]
-// cron "3 */2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js,tag=京东摇钱树
+// cron "3 */2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_moneyTree.js,tag=京东摇钱树
 // Surge
-//京东摇钱树 = type=cron,cronexp="3 */2 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js
+//京东摇钱树 = type=cron,cronexp="3 */2 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_moneyTree.js
 const $ = new Env('京东摇钱树');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -49,8 +49,12 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        } else {
+          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        }
         continue
       }
       message = '';
@@ -115,7 +119,7 @@ function user_info() {
                 userInfo = res.resultData.data;
                 // userInfo.realName = null;
                 if (userInfo.realName) {
-                  //console.log(`助力码sharePin为：：${userInfo.sharePin}`);
+                  // console.log(`助力码sharePin为：：${userInfo.sharePin}`);
                   $.treeMsgTime = userInfo.sharePin;
                   if ($.getdata($.treeMsgTime)) {
                     if ($.getdata($.treeMsgTime) >= Notice) {

@@ -11,12 +11,12 @@
  // QuantumultX
  [task_local]
  #摇京豆
- 5 0 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_club_lottery.js, tag=摇京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyjd.png, enabled=true
+ 5 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_club_lottery.js, tag=摇京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyjd.png, enabled=true
  //Loon
  [Script]
- cron "5 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_club_lottery.js,tag=摇京豆
+ cron "5 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_club_lottery.js,tag=摇京豆
  //Surge
- 摇京豆 = type=cron,cronexp="5 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_club_lottery.js
+ 摇京豆 = type=cron,cronexp="5 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_club_lottery.js
  * */
 
 const $ = new Env('摇京豆');
@@ -55,8 +55,12 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        } else {
+          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        }
         continue
       }
       await clubLottery();

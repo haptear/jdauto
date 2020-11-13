@@ -1,5 +1,5 @@
 /*
-京东天天加速链接：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js
+京东天天加速链接：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js
 更新时间：2020-11-03
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -11,12 +11,12 @@
 // quantumultx
 // [task_local]
 // #天天加速
-// 8 */3 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
+// 8 */3 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
 // Loon
 // [Script]
-// cron "8 */3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js,tag=京东天天加速
+// cron "8 */3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js,tag=京东天天加速
 // Surge
-//天天加速 = type=cron,cronexp="8 */3 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js
+//天天加速 = type=cron,cronexp="8 */3 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_speed.js
 const $ = new Env('✈️天天加速');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -53,8 +53,12 @@ const JD_API_HOST = 'https://api.m.jd.com/'
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        } else {
+          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        }
         continue
       }
       message = '';

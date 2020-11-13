@@ -1,5 +1,5 @@
 /*
-京小超兑换奖品 脚本地址：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
+京小超兑换奖品 脚本地址：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js
 感谢@yangtingxiao提供PR
 更新时间：2020-11-05
 支持京东多个账号
@@ -7,12 +7,12 @@
 ======================quantumultx===============
 [task_local]
 #京小超兑换奖品
-0 0 0 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js, tag=京小超兑换奖品, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
+0 0 0 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js, tag=京小超兑换奖品, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
 ====================Loon=================
 [Script]
-cron "0 0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js,tag=京小超兑换奖品
+cron "0 0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js,tag=京小超兑换奖品
 ===================Surge==================
-京小超兑换奖品 = type=cron,cronexp="0 0 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
+京小超兑换奖品 = type=cron,cronexp="0 0 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_blueCoin.js
  */
 const $ = new Env('京小超兑换奖品');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -57,8 +57,12 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        } else {
+          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        }
         continue
       }
       //先兑换京豆

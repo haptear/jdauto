@@ -5,7 +5,7 @@
  * @Last Modified time: 2020-11-03 16:25:41
  */
 /*
-京豆变动通知脚本：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_bean_change.js
+京豆变动通知脚本：https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_change.js
 统计昨日京豆的变化情况，包括收入，支出，以及显示当前京豆数量,目前小问题:下单使用京豆后,退款重新购买会出现异常
 网页查看地址 : https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean
 支持京东双账号
@@ -13,12 +13,12 @@
 quantumultx
 [task_local]
 #京豆变动通知
-2 9 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_bean_change.js, tag=京豆变动通知, enabled=true
+2 9 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_change.js, tag=京豆变动通知, enabled=true
 Loon
 [Script]
-cron "2 9 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_bean_change.js, tag=京豆变动通知
+cron "2 9 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_change.js, tag=京豆变动通知
 Surge
-京豆变动通知 = type=cron,cronexp=2 9 * * *,wake-system=1,timeout=440,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_bean_change.js
+京豆变动通知 = type=cron,cronexp=2 9 * * *,wake-system=1,timeout=440,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_bean_change.js
  */
 const $ = new Env('京豆变动通知');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -56,8 +56,12 @@ if ($.isNode()) {
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        } else {
+          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        }
         continue
       }
       await bean();

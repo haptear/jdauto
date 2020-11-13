@@ -18,12 +18,12 @@
 QuantumultX
 [task_local]
 #京东全民开红包
-1 1 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js, tag=京东全民开红包, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
+1 1 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_redPacket.js, tag=京东全民开红包, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
 Loon
 [Script]
-cron "1 1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js, tag=京东全民开红包
+cron "1 1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_redPacket.js, tag=京东全民开红包
 Surge
-京东全民开红包 = type=cron,cronexp=1 1 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js
+京东全民开红包 = type=cron,cronexp=1 1 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_redPacket.js
  */
 const $ = new Env('京东全民开红包');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -61,8 +61,12 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        } else {
+          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        }
         continue
       }
       $.discount = 0;

@@ -13,12 +13,12 @@ Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
 // quantumultx
 // [task_local]
 // #京东宠汪汪
-// 15 */2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
+// 15 */2 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
 // Loon
 // [Script]
-// cron "15 */2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js,tag=京东宠汪汪
+// cron "15 */2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy.js,tag=京东宠汪汪
 // Surge
-// 京东宠汪汪 = type=cron,cronexp="15 */2 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js
+// 京东宠汪汪 = type=cron,cronexp="15 */2 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy.js
 const $ = new Env('宠汪汪');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -59,8 +59,12 @@ const weAppUrl = 'https://draw.jdfcloud.com//pet';
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        } else {
+          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        }
         continue
       }
       message = '';
