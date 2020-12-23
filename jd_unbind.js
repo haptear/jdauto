@@ -1,27 +1,25 @@
 /*
-宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
-更新时间：2020-12-23
-兑换规则：一个账号一天只能兑换一次京豆。
-兑换奖品成功后才会有系统弹窗通知
-每日京豆库存会在0:00、8:00、16:00更新，经测试发现中午12:00也会有补发京豆。
-支持京东双账号
+注销京东会员卡
+是注销京东已开的店铺会员,不是京东plus会员
+查看已开店铺会员入口:我的=>我的钱包=>卡包
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
-// Quantumult X
+==========Quantumult X==========
 [task_local]
-#宠汪汪积分兑换奖品
-0 0-16/8 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_reward.js, tag=宠汪汪积分兑换奖品, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
-// Loon
+#注销京东会员卡
+55 23 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js, tag=注销京东会员卡, enabled=true
+=======Loon========
 [Script]
-cron "0 0-16/8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_reward.js,tag=宠汪汪积分兑换奖品
-// Surge
-宠汪汪积分兑换奖品 = type=cron,cronexp="0 0-16/8 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_joy_reward.js
+cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js,tag=注销京东会员卡
+========Surge==========
+注销京东会员卡 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=620,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js
+=======小火箭=====
+注销京东会员卡 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_unbind.js, cronexpr="10 23 * * *", timeout=200, enable=true
  */
-const $ = new Env('宠汪汪积分兑换奖品');
-let joyRewardName = 20;//是否兑换京豆，默认开启兑换功能，其中20为兑换20京豆,500为兑换500京豆，0为不兑换京豆.数量有限先到先得
+const $ = new Env('注销京东会员卡');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
-let jdNotify = false;//是否开启静默运行，默认false关闭(即:奖品兑换成功后会发出通知提示)
+
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 if ($.isNode()) {
@@ -37,11 +35,15 @@ if ($.isNode()) {
   cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
   cookiesArr.reverse();
 }
-const JD_API_HOST = 'https://jdjoy.jd.com';
+const jdNotify = $.getdata('jdUnsubscribeNotify');//是否关闭通知，false打开通知推送，true关闭通知推送
+let cardPageSize = $.getdata('jdUnsubscribePageSize') || 200;// 运行一次取消多少个会员卡。数字0表示不注销任何会员卡
+let stopCards = $.getdata('jdUnsubscribeStopCards') || ['京东PLUS会员'];//遇到此会员卡不再进行注销
+const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg('【京东账号一】宠汪汪积分兑换奖品失败', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg('【京东账号一】注销京东会员卡失败', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
   }
+  await requireConfig()
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -49,6 +51,8 @@ const JD_API_HOST = 'https://jdjoy.jd.com';
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
+      $.unsubscribeCount = 0
+      $.cardList = []
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
@@ -61,8 +65,8 @@ const JD_API_HOST = 'https://jdjoy.jd.com';
         }
         continue
       }
-      await joyReward();
-      // $.msg($.name, '兑换脚本暂不能使用', `请停止使用，等待后期更新\n如果新版本兑换您有兑换机会，请抓包兑换\n再把抓包数据发送telegram用户@lxk0301`);
+      await jdUnbind();
+      await showMsg();
     }
   }
 })()
@@ -72,146 +76,52 @@ const JD_API_HOST = 'https://jdjoy.jd.com';
     .finally(() => {
       $.done();
     })
-
-async function joyReward() {
-  await getExchangeRewards();
-  if ($.getExchangeRewardsRes && $.getExchangeRewardsRes.success) {
-    // console.log('success', $.getExchangeRewardsRes);
-    const data = $.getExchangeRewardsRes.data;
-    const levelSaleInfos = data.levelSaleInfos;
-    const giftSaleInfos = levelSaleInfos.giftSaleInfos;
-    console.log(`当前积分 ${data.coin}\n`);
-    console.log(`宠物等级 ${data.level}\n`);
-    console.log(`京东昵称 ${$.nickName}\n`);
-    let saleInfoId = '', giftValue = '', extInfo = '', leftStock = 0, salePrice = 0;
-    let rewardNum = 0;
-    if ($.isNode() && process.env.JD_JOY_REWARD_NAME) {
-      rewardNum = process.env.JD_JOY_REWARD_NAME * 1;
-    } else if ($.getdata('joyRewardName')) {
-      if ($.getdata('joyRewardName') * 1 === 1) {
-        //兼容之前的BoxJs设置
-        rewardNum = 20;
-      } else {
-        rewardNum = $.getdata('joyRewardName') * 1;
-      }
-    } else {
-      rewardNum = joyRewardName;
+async function jdUnbind() {
+  await getCards()
+  await unsubscribeCards()
+}
+async function unsubscribeCards() {
+  let count = 0
+  for (let item of $.cardList) {
+    if (count === cardPageSize * 1){
+      console.log(`已达到设定数量:${cardPageSize * 1}`)
+      break
     }
-    for (let item of giftSaleInfos) {
-      if (item.giftType === 'jd_bean' && item['giftValue'] === rewardNum) {
-        saleInfoId = item.id;
-        leftStock = item.leftStock;
-        salePrice = item.salePrice;
-        giftValue = item.giftValue;
+    if (stopCards && (item.brandName && stopCards.includes(item.brandName))) {
+      console.log(`匹配到了您设定的会员卡【${item.brandName}】不再进行取消关注会员卡`)
+      continue;
+    }
+    console.log(`去注销会员卡【${item.brandName}】`)
+    let res = await unsubscribeCard(item.brandId);
+    if (res['success']) {
+      if (res['busiCode'] === '200') {
+        count++;
+        $.unsubscribeCount ++
       }
     }
-    console.log(`当前京豆库存:${leftStock}`)
-    console.log(`saleInfoId:${saleInfoId}`)
-    // 兼容之前BoxJs兑换设置的数据
-    if (rewardNum && (rewardNum === 1 || rewardNum === 20 || rewardNum === 50 || rewardNum === 100 || rewardNum === 500 || rewardNum === 1000)) {
-      //开始兑换
-      if (data.coin >= salePrice) {
-        if (leftStock) {
-          if (!saleInfoId) return
-          console.log(`当前账户积分:${data.coin}\n当前京豆库存:${leftStock}\n满足兑换条件,开始为您兑换京豆\n`);
-          await exchange(saleInfoId, 'pet');
-          if ($.exchangeRes && $.exchangeRes.success) {
-            if ($.exchangeRes.errorCode === 'buy_success') {
-              console.log(`兑换${giftValue}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
-              let ctrTemp;
-              if ($.isNode() && process.env.JD_JOY_REWARD_NOTIFY) {
-                ctrTemp = `${process.env.JD_JOY_REWARD_NOTIFY}` === 'false';
-              } else if ($.getdata('jdJoyRewardNotify')) {
-                ctrTemp = $.getdata('jdJoyRewardNotify') === 'false';
-              } else {
-                ctrTemp = `${jdNotify}` === 'false';
-              }
-              if (ctrTemp) {
-                $.msg($.name, `兑换${giftValue}京豆成功`, `【京东账号${$.index}】${$.nickName}\n【宠物等级】${data.level}\n【积分详情】消耗积分 ${salePrice}, 剩余积分 ${data.coin - salePrice}`);
-                if ($.isNode()) {
-                  await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n【兑换${giftValue}京豆】成功\n【宠物等级】${data.level}\n【积分详情】消耗积分 ${salePrice}, 剩余积分 ${data.coin - salePrice}`);
-                }
-              }
-              // if ($.isNode()) {
-              //   await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${$.nickName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
-              // }
-            } else if ($.exchangeRes && $.exchangeRes.errorCode === 'buy_limit') {
-              console.log(`兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~`)
-              //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
-            } else {
-              console.log(`兑奖异常:${JSON.stringify($.exchangeRes)}`)
-            }
-          } else {
-            console.log(`兑换京豆异常:${JSON.stringify($.exchangeRes)}`)
-          }
-        } else {
-          console.log(`兑换${rewardNum}京豆失败，原因：京豆库存不足，已抢完，请下一场再兑换`)
-        }
-      } else {
-        console.log(`兑换${rewardNum}京豆失败，原因：您目前只有${data.coin}积分，已不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
-        //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n目前只有${data.coin}积分\n已不足兑换${giftName}所需的${salePrice}积分\n`)
-      }
-    } else {
-      console.log('您设置了不兑换京豆,如需兑换京豆，请去BoxJs重新设置或修改第20行代码')
-    }
-  } else {
-    console.log(`${$.name}getExchangeRewards异常,${JSON.stringify($.getExchangeRewardsRes)}`)
+    await $.wait(1000)
   }
 }
-function getExchangeRewards() {
+function showMsg() {
+  if (!jdNotify || jdNotify === 'false') {
+    $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【已注销会员卡】${$.unsubscribeCount}个\n【还剩会员卡】${$.cardsTotalNum-$.unsubscribeCount}个\n`);
+  } else {
+    $.log(`\n【京东账号${$.index}】${$.nickName}\n【已注销会员卡】${$.unsubscribeCount}个\n【还剩会员卡】${$.cardsTotalNum-$.unsubscribeCount}个\n`);
+  }
+}
+function getCards() {
   return new Promise((resolve) => {
     const option = {
-      url: `${JD_API_HOST}/gift/getHomeInfo`,
+      url: `${JD_API_HOST}client.action?functionId=getWalletReceivedCardList`,
+      body: 'body=%7B%22version%22%3A1580659200%7D&build=167490&client=apple&clientVersion=9.3.2&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&rfs=0000&scope=01&sign=aa00f715800e252fcebcb11573f4a505&st=1608612985755&sv=102',
       headers: {
-        "Host": "jdjoy.jd.com",
-        "Content-Type": "application/json",
-        "Cookie": cookie,
-        "reqSource": "h5",
-        "Connection": "keep-alive",
+        "Host": "api.m.jd.com",
         "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
         "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
-        "Referer": "https://jdjoy.jd.com/pet/index",
         "Accept-Language": "zh-cn",
         "Accept-Encoding": "gzip, deflate, br"
-      },
-    }
-    $.get(option, (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          $.getExchangeRewardsRes = {};
-          if (safeGet(data)) {
-            $.getExchangeRewardsRes = JSON.parse(data);
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
-    });
-  })
-}
-function exchange(saleInfoId, orderSource) {
-  return new Promise((resolve) => {
-    const option = {
-      url: `${JD_API_HOST}/gift/exchange`,
-      body: `${JSON.stringify({ saleInfoId, orderSource })}`,
-      headers: {
-        "Host": "jdjoy.jd.com",
-        "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "zh-cn",
-        "Content-Type": "application/json",
-        "Origin": "https://jdjoy.jd.com",
-        "reqSource": "h5",
-        "Connection": "keep-alive",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
-        "Referer": "https://jdjoy.jd.com/pet/index",
-        "Content-Length": "10",
-        "Cookie": cookie
       },
     }
     $.post(option, (err, resp, data) => {
@@ -220,16 +130,51 @@ function exchange(saleInfoId, orderSource) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(`兑换结果:${data}`);
-          $.exchangeRes = {};
           if (safeGet(data)) {
-            $.exchangeRes = JSON.parse(data);
+            data = JSON.parse(data);
+            $.cardsTotalNum = data.result.cardList ? data.result.cardList.length : 0;
+            $.cardList = data.result.cardList || []
           }
         }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
-        resolve();
+        resolve(data);
+      }
+    });
+  })
+}
+function unsubscribeCard(vendorId) {
+  return new Promise(resolve => {
+    const option = {
+      url: `${JD_API_HOST}unBindCard?appid=jd_shop_member&functionId=unBindCard&body=%7B%22venderId%22:%22${vendorId}%22%7D&clientVersion=1.0.0&client=wh5`,
+      headers: {
+        "Host": "api.m.jd.com",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        'origin': 'https://shopmember.m.jd.com',
+        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        'Referer': `https://shopmember.m.jd.com/member/memberCloseAccount?venderId=${vendorId}`,
+        'Cookie': cookie,
+        "Accept-Language": "zh-cn",
+        "Accept-Encoding": "gzip, deflate, br"
+      },
+    }
+    $.post(option, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data)
+            console.log(data.message)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
       }
     });
   })
@@ -272,6 +217,29 @@ function TotalBean() {
         resolve();
       }
     })
+  })
+}
+function requireConfig() {
+  return new Promise(resolve => {
+    if ($.isNode() && process.env.UN_BIND_CARD_NUM) {
+      $.UN_BIND_NUM = process.env.UN_BIND_CARD_NUM
+    }
+    if ($.isNode() && process.env.UN_BIND_STOP_CARD) {
+      if (process.env.UN_BIND_STOP_CARD.indexOf('&') > -1) {
+        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('&');
+      } if (process.env.UN_BIND_STOP_CARD.indexOf('@') > -1) {
+        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('@');
+      } else if (process.env.UN_BIND_STOP_CARD.indexOf('\n') > -1) {
+        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('\n');
+      } else if (process.env.UN_BIND_STOP_CARD.indexOf('\\n') > -1) {
+        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split('\\n');
+      } else {
+        $.UN_BIND_STOP_CARD = process.env.UN_BIND_STOP_CARD.split();
+      }
+    }
+    cardPageSize = $.UN_BIND_NUM || cardPageSize
+    stopCards = $.UN_BIND_STOP_CARD || stopCards
+    resolve()
   })
 }
 function jsonParse(str) {
