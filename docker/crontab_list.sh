@@ -1,11 +1,11 @@
 #必须要的默认定时任务请勿删除
-52 */1 * * * sh /scripts/docker/default_task.sh >> /scripts/logs/default_task.log 2>&1
+52 */1 * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1
 # 每3天的23:50分清理一次日志
 50 23 */3 * * rm -rf /scripts/logs/*.log
 
 ##############短期活动##############
-
-
+#年货节(活动时间：2021年1月9日-2021年2月9日)
+10 8 * * * node /scripts/jd_nh.js >> /scripts/logs/jd_nh.log 2>&1
 ##############长期活动##############
 # 签到
 0 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
@@ -83,3 +83,9 @@
 7 8,12,18 * * * node /scripts/jd_bookshop.js >> /scripts/logs/jd_bookshop.log 2>&1
 # 京喜农场
 0 9,12,18 * * * node /scripts/jd_jxnc.js >> /scripts/logs/jd_jxnc.log 2>&1
+# 签到领现金
+27 7 * * * node /scripts/jd_cash.js >> /scripts/logs/jd_cash.log 2>&1
+# 京喜app签到
+39 7 * * * node /scripts/jx_sign.js >> /scripts/logs/jx_sign.log 2>&1
+#京东家庭号(暂不知最佳cron)
+*/20 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
