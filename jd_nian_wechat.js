@@ -258,6 +258,8 @@ function getTaskList() {
 function taskUrl(function_id, body = {}) {
   let url = `${JD_API_HOST}`;
   body = `?dev=nian_getHomeData&sceneval=&callback=${function_id}&functionId=${function_id}&client=wh5&clientVersion=1.0.0&uuid=-1&body=${escape(JSON.stringify(body))}&loginType=2&loginWQBiz=businesst1&g_ty=ls&g_tk=642524613`
+  console.log(`taskUrl USER_AGENT ${$.isNode() ? (process.env.JD_WECHAT_USER_AGENT ? process.env.JD_WECHAT_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUAWECHAT') ? $.getdata('JDUAWECHAT') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")}`)
+ 
   return {
     url:`${url}${body}`,
     headers: {
@@ -285,6 +287,8 @@ function TotalBean() {
         "User-Agent": $.isNode() ? (process.env.JD_WECHAT_USER_AGENT ? process.env.JD_WECHAT_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUAWECHAT') ? $.getdata('JDUAWECHAT') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
+
+    console.log(`TotalBean USER_AGENT ${options.USER_AGENT}`)
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
