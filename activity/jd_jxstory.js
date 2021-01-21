@@ -1,4 +1,4 @@
-/*
+﻿/*
 京喜故事
 活动入口 :京喜APP->首页浮动窗口去领钱/京喜工厂-金牌厂长
 每天运行一次即可
@@ -16,10 +16,10 @@
 cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxstory.js,tag=京喜故事
 
 ===============Surge=================
-京喜故事 = type=cron,cronexp="10 * * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxstory.js
+京喜故事 = type=cron,cronexp="10 * * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxstory.js
 
 ============小火箭=========
-京喜故事 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxstory.js, cronexpr="10 * * * *", timeout=200, enable=true
+京喜故事 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxstory.js, cronexpr="10 * * * *", timeout=3600, enable=true
 
  */
 

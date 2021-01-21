@@ -21,7 +21,8 @@ if (process.env.JD_COOKIE) {
 }
 
 //https://code.chiang.fun/api
-//https://code.chiang.fun/api/v1/jd/jdnian/create.{}
+//https://code.chiang.fun/api/v1/jd/jdnian/create/cgxZfDXGcfmepkKqD1Ty7GvI3Q8
+//http://jd.turinglabs.net/api/v2/jd
 
 CookieJDs = [...new Set(CookieJDs.filter(item => item !== "" && item !== null && item !== undefined))]
 console.log(`\n====================共有${CookieJDs.length}个京东账号Cookie=========\n`);

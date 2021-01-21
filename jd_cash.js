@@ -1,4 +1,4 @@
-/*
+﻿/*
 签到领现金，每日2毛～5毛
 可互助，助力码每日不变，只变日期
 活动入口：京东APP搜索领现金进入
@@ -7,17 +7,17 @@
 ============Quantumultx===============
 [task_local]
 #签到领现金
-2 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js, tag=签到领现金, enabled=true
+2 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]
 cron "2 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js,tag=签到领现金
 
 ===============Surge=================
-签到领现金 = type=cron,cronexp="2 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js
+签到领现金 = type=cron,cronexp="2 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js
 
 ============小火箭=========
-签到领现金 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js, cronexpr="2 0 * * *", timeout=200, enable=true
+签到领现金 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js, cronexpr="2 0 * * *", timeout=3600, enable=true
  */
 const $ = new Env('签到领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';

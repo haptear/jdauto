@@ -1,4 +1,4 @@
-/*
+﻿/*
 健康抽奖机 ，活动于2020-12-31日结束
 脚本会给内置的码进行助力
 活动地址：https://h5.m.jd.com/babelDiy/Zeus/3HBUP66Gnx92mRt2bXbT9VamYWSx/index.html
@@ -14,10 +14,10 @@
 cron "10 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_health.js,tag=健康抽奖机
 
 ===============Surge=================
-健康抽奖机 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_health.js
+健康抽奖机 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_health.js
 
 ============小火箭=========
-健康抽奖机 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_health.js, cronexpr="10 0 * * *", timeout=200, enable=true
+健康抽奖机 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_health.js, cronexpr="10 0 * * *", timeout=3600, enable=true
  */
 const $ = new Env('健康抽奖机');
 

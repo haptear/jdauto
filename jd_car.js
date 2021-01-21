@@ -1,4 +1,4 @@
-/*
+﻿/*
 京东汽车，签到满500赛点可兑换500京豆，一天运行一次即可
 长期活动
 活动入口：首页👉京东汽车👉屏幕右中部，车主福利
@@ -15,10 +15,10 @@
 cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, tag=京东汽车
 
 ===============Surge=================
-京东汽车 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js
+京东汽车 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js
 
 ============小火箭=========
-京东汽车 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, cronexpr="10 7 * * *", timeout=200, enable=true
+京东汽车 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, cronexpr="10 7 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东汽车');
 
