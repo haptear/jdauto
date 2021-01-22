@@ -1,4 +1,4 @@
-
+﻿
 # 云函数快速部署京东脚本
 >
 > - 本地安装依赖使用serverless部署，[点这里](tencentscf.md#1-安装-nodejs-环境)
@@ -42,7 +42,7 @@ let CookieJDs = [
 ]
 ```
 
-> 注：获取京东 cookie 教程参考 [浏览器获取京东cookie教程](https://github.com/LXK9301/jd_scripts/blob/master/backUp/GetJdCookie.md) , [插件获取京东cookie教程](https://github.com/LXK9301/jd_scripts/blob/master/backUp/GetJdCookie2.md)
+> 注：获取京东 cookie 教程参考 [浏览器获取京东cookie教程](https://github.com/haptear/jdauto/blob/master/backUp/GetJdCookie.md) , [插件获取京东cookie教程](https://github.com/haptear/jdauto/blob/master/backUp/GetJdCookie2.md)
 
 
 ## 4. 部署到云函数

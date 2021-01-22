@@ -1,6 +1,10 @@
-![Docker Pulls](https://img.shields.io/docker/pulls/lxk0301/jd_scripts?style=for-the-badge)
+﻿![Docker Pulls](https://img.shields.io/docker/pulls/lxk0301/jd_scripts?style=for-the-badge)
 ### Usage
 ```diff
++ 2021-01-21更新 增加 DO_NOT_RUN_SCRIPTS 参数配置不执行的脚本
++ 例:DO_NOT_RUN_SCRIPTS=jd_family&jd_dreamFactory&jd_jxnc
+
+
 + 2021-01-03更新 增加 CUSTOM_SHELL_FILE 参数配置执行自定义shell脚本
 + 例1:配置远程shell脚本, 我自己写了一个shell脚本https://raw.githubusercontent.com/iouAkira/someDockerfile/master/jd_scripts/shell_script_mod.sh 内容很简单下载惊喜农场并添加定时任务
 + CUSTOM_SHELL_FILE=https://raw.githubusercontent.com/iouAkira/someDockerfile/master/jd_scripts/shell_script_mod.sh
@@ -62,7 +66,7 @@ jd_scripts
 - - [使用群晖默认配置用这个](./example/jd_scripts.syno.json)
 - - [使用群晖自定义任务追加到默认任务之后用这个](./example/jd_scripts.custom-append.syno.json)
 - - [使用群晖自定义任务覆盖默认任务用这个](./example/jd_scripts.custom-overwrite.syno.json)
-- `jd_scripts/docker-compose.yml`里面的环境变量(`environment:`)配置[参考这里](https://github.com/LXK9301/jd_scripts/blob/master/githubAction.md#%E4%B8%8B%E6%96%B9%E6%8F%90%E4%BE%9B%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84-secrets%E5%85%A8%E9%9B%86%E5%90%88)
+- `jd_scripts/docker-compose.yml`里面的环境变量(`environment:`)配置[参考这里](https://github.com/haptear/jdauto/blob/master/githubAction.md#%E4%B8%8B%E6%96%B9%E6%8F%90%E4%BE%9B%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84-secrets%E5%85%A8%E9%9B%86%E5%90%88)
 
 
 - `jd_scripts/my_crontab_list.sh` 参考内容如下,自己根据需要调整增加删除，不熟悉用户推荐使用默认配置：

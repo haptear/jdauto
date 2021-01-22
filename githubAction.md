@@ -1,10 +1,10 @@
-## 环境变量说明
+﻿## 环境变量说明
 
 ##### 京东(必须)
 
 |    Name     | 归属 | 属性 | 说明                                                         |
 | :---------: | :--: | ---- | ------------------------------------------------------------ |
-| `JD_COOKIE` | 京东 | 必须 | 京东cookie,多个账号的cookie使用`&`隔开或者换行。具体获取参考[浏览器获取京东cookie教程](https://github.com/LXK9301/jd_scripts/blob/master/backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](https://github.com/LXK9301/jd_scripts/blob/master/backUp/GetJdCookie2.md) |
+| `JD_COOKIE` | 京东 | 必须 | 京东cookie,多个账号的cookie使用`&`隔开或者换行。具体获取参考[浏览器获取京东cookie教程](https://github.com/haptear/jdauto/blob/master/backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](https://github.com/haptear/jdauto/blob/master/backUp/GetJdCookie2.md) |
 
 ##### 京东隐私安全 环境变量
 
@@ -37,12 +37,12 @@
 
 |            Name             |        归属        |  属性  | 需要助力次数/提供助力次数 | 说明                                                         |
 | :-------------------------: | :----------------: | :----: | :-----------------------: | ------------------------------------------------------------ |
-|      `FRUITSHARECODES`      |   东东农场互助码   | 非必须 |            5/4            | 填写规则请看[jdFruitShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdFruitShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-|       `PETSHARECODES`       |   东东萌宠互助码   | 非必须 |            5/5            | 填写规则请看[jdPetShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdPetShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-|   `PLANT_BEAN_SHARECODES`   |   种豆得豆互助码   | 非必须 |            9/3            | 填写规则请看[jdPlantBeanShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdPlantBeanShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-|  `SUPERMARKET_SHARECODES`   | 东东超市商圈互助码 | 非必须 |             /             | 填写规则请看[jdSuperMarketShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdSuperMarketShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-|   `DDFACTORY_SHARECODES`    |   东东工厂互助码   | 非必须 |            5/3            | 填写规则请看[jdFactoryShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `DREAM_FACTORY_SHARE_CODES` |   京喜工厂互助码   | 非必须 |         不固定/3          | 填写规则请看[jdDreamFactoryShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdDreamFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+|      `FRUITSHARECODES`      |   东东农场互助码   | 非必须 |            5/4            | 填写规则请看[jdFruitShareCodes.js](https://github.com/haptear/jdauto/blob/master/jdFruitShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+|       `PETSHARECODES`       |   东东萌宠互助码   | 非必须 |            5/5            | 填写规则请看[jdPetShareCodes.js](https://github.com/haptear/jdauto/blob/master/jdPetShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+|   `PLANT_BEAN_SHARECODES`   |   种豆得豆互助码   | 非必须 |            9/3            | 填写规则请看[jdPlantBeanShareCodes.js](https://github.com/haptear/jdauto/blob/master/jdPlantBeanShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+|  `SUPERMARKET_SHARECODES`   | 东东超市商圈互助码 | 非必须 |             /             | 填写规则请看[jdSuperMarketShareCodes.js](https://github.com/haptear/jdauto/blob/master/jdSuperMarketShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+|   `DDFACTORY_SHARECODES`    |   东东工厂互助码   | 非必须 |            5/3            | 填写规则请看[jdFactoryShareCodes.js](https://github.com/haptear/jdauto/blob/master/jdFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+| `DREAM_FACTORY_SHARE_CODES` |   京喜工厂互助码   | 非必须 |         不固定/3          | 填写规则请看[jdDreamFactoryShareCodes.js](https://github.com/haptear/jdauto/blob/master/jdDreamFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
 |      `JDZZ_SHARECODES`      |   京东赚赚互助码   | 非必须 |            5/2            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |     `JDJOY_SHARECODES`      |  疯狂的JOY互助码   | 非必须 |            6/             | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |    `BOOKSHOP_SHARECODES`    |   京东书店互助码   | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
@@ -82,7 +82,7 @@
 |       `BUY_JOY_LEVEL`        |   疯狂的JOY<br>购买joy等级   | 非必须 | 疯狂的JOY自动购买什么等级的JOY                               |
 |   `MONEY_TREE_SELL_FRUIT`    |    摇钱树<br>是否卖出金果    | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认`false` |
 | `FACTORAY_WANTPRODUCT_NAME`  |     东东工厂<br>心仪商品     | 非必须 | 提供心仪商品名称(请尽量填写完整和别的商品有区分度)，达到条件后兑换，<br>如不提供则会兑换当前所选商品 |
-|         `JXNCTOKENS`         |        京喜农场TOKEN         | 非必须 | 每个账号 token 是一个 json，json 需要用单引号包裹且是一行字符串，<br>否则设置环境变量时会出错，示例：'{"farm_jstoken":"749a90f871adsfads8ffda7bf3b1576760",<br>"timestamp":"1610165423873",<br>"phoneid":"42c7e3dadfadsfdsaac-18f0e4f4a0cf"}'，多账单间使用`&`或换行分开。 |
+|         `JXNCTOKENS`         |        京喜农场TOKEN         | 非必须 | 每个账号 token 是一个 json，json 需要用单引号包裹且是一行字符串，<br>否则设置环境变量时会出错，示例：'{"farm_jstoken":"749a90f871adsfads8ffda7bf3b1576760",<br>"timestamp":"1610165423873",<br>"phoneid":"42c7e3dadfadsfdsaac-18f0e4f4a0cf"}'，多账号间使用`&`或换行分开。 |
 |     `JD_IMMORTAL_LATLON`     |    京东神仙书院<br>地理位置变量     | 非必须 | 京东神仙书院地理位置，示例格式：{"lat":33.1, "lng":118.1} |
 |     `JD_WECHAT_USER_AGENT`     |    京东炸年兽<br>小程序<br>自定义UA     | 非必须 | 强烈推荐使用自定义的小程序UA防止黑号，UA示例：<br>Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15A148 MicroMessenger/7.0.20(0x17001320) NetType/WIFI Language/zh_CN |
 

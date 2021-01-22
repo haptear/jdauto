@@ -1,4 +1,4 @@
-//'use strict';
+﻿//'use strict';
 exports.main_handler = async (event, context, callback) => {
   try {
     //如果想在一个定时触发器里面执行多个js文件需要在定时触发器的【附加信息】里面填写对应的名称，用 & 链接
@@ -16,7 +16,7 @@ exports.main_handler = async (event, context, callback) => {
       //})
 
       //3.执行github远端的js文件(因github的raw类型的文件被墙,此方法云函数不推荐)
-      request('https://raw.githubusercontent.com/LXK9301/jd_scripts/master/' + v + '.js', function (error, response, body) {
+      request('https://raw.githubusercontent.com/haptear/jdauto/master/' + v + '.js', function (error, response, body) {
         eval(response.body)
       })
     }

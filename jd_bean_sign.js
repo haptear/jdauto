@@ -1,5 +1,5 @@
 ﻿/*
- * @Author: LXK9301 https://github.com/LXK9301
+ * 
  */
 /*
 京豆签到,自用,可N个京东账号

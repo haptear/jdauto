@@ -9,17 +9,17 @@
 ============Quantumultx===============
 [task_local]
 #京东炸年兽小程序🧨
-50 8 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js, tag=京东炸年兽小程序🧨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_nian.png, enabled=true
+50 8 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_nian_wechat.js, tag=京东炸年兽小程序🧨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_nian.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "50 8 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js,tag=京东炸年兽小程序🧨
+cron "50 8 * * *" script-path=https://raw.githubusercontent.com/haptear/jdauto/master/jd_nian_wechat.js,tag=京东炸年兽小程序🧨
 
 ===============Surge=================
-京东炸年兽小程序🧨 = type=cron,cronexp="50 8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js
+京东炸年兽小程序🧨 = type=cron,cronexp="50 8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/haptear/jdauto/master/jd_nian_wechat.js
 
 ============小火箭=========
-京东炸年兽小程序🧨 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js, cronexpr="50 8 * * *", timeout=3600, enable=true
+京东炸年兽小程序🧨 = type=cron,script-path=https://raw.githubusercontent.com/haptear/jdauto/master/jd_nian_wechat.js, cronexpr="50 8 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东炸年兽小程序🧨');
 
@@ -258,7 +258,6 @@ function getTaskList() {
 function taskUrl(function_id, body = {}) {
   let url = `${JD_API_HOST}`;
   body = `?dev=nian_getHomeData&sceneval=&callback=${function_id}&functionId=${function_id}&client=wh5&clientVersion=1.0.0&uuid=-1&body=${escape(JSON.stringify(body))}&loginType=2&loginWQBiz=businesst1&g_ty=ls&g_tk=642524613`
- 
   return {
     url:`${url}${body}`,
     headers: {
@@ -286,7 +285,6 @@ function TotalBean() {
         "User-Agent": $.isNode() ? (process.env.JD_WECHAT_USER_AGENT ? process.env.JD_WECHAT_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUAWECHAT') ? $.getdata('JDUAWECHAT') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
-
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
