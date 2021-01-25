@@ -1,8 +1,8 @@
 ﻿/**
  * 扫码获取京东cookie，此方式得到的cookie有效期为90天(实际待测试)
- * 
+ * @Author: haptear https://github.com/haptear
  * @Date: 2021-01-13 12:12:40
- * 
+ * @Last Modified by: haptear
  * @Last Modified time: 2021-01-13 12:22:54
  * Modify from FanchangWang https://github.com/FanchangWang
  */

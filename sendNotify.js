@@ -1,7 +1,7 @@
 ﻿/*
- * 
+ * @Author: haptear https://github.com/haptear
  * @Date: 2020-08-19 16:12:40 
- * 
+ * @Last Modified by: haptear
  * @Last Modified time: 2021-1-7 17:52:54
  */
 const querystring = require("querystring");

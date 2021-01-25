@@ -1,5 +1,5 @@
 ﻿/*
- * 
+ * @Author: haptear https://github.com/haptear
  */
 /*
 京豆签到,自用,可N个京东账号
