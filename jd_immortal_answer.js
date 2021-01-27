@@ -154,7 +154,7 @@ function getQuestions() {
               let option = null, hasFound = false
 
               console.log(`去查询第${++i}题：【${vo.questionStem}】`)
-              let ques = $.tk.filter(qo => qo.questionId === vo.questionId)
+              let ques =$.tk?$.tk.filter(qo => qo.questionId === vo.questionId):[]
 
               if (ques.length) {
                 ques = ques[0]
