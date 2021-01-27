@@ -402,7 +402,9 @@ function requireTk() {
       }
     }, (err, resp, data) => {
       try {
+        console.log(data)
         $.tk = JSON.parse(data).RECORDS
+        console.log($.tk)
       } catch (e) {
         console.log(e)
       } finally {
