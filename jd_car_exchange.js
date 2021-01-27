@@ -2,8 +2,7 @@
 京东汽车兑换，500赛点兑换500京豆
 长期活动
 
-活动入口
-京东APP：首页👉京东汽车兑换👉屏幕右中部，车主福利
+活动入口：首页👉京东汽车兑换👉屏幕右中部，车主福利
 活动网页地址：https://h5.m.jd.com/babelDiy/Zeus/44bjzCpzH9GpspWeBzYSqBA7jEtP/index.html#/journey
 
 更新地址：https://raw.githubusercontent.com/haptear/jdauto/master/jd_car_exchange
