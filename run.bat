@@ -1,4 +1,4 @@
-ï»¿rem å…ˆæŠŠ.githubç›®å½•è®¾ç½®æœªéšè—ï¼Œè¿™æ ·xcopyå°±ä¸ä¼šæ‹·è´.git å’Œ .githubç›®å½•
+rem ÏÈ°Ñ.githubÄ¿Â¼ÉèÖÃÎ´Òş²Ø£¬ÕâÑùxcopy¾Í²»»á¿½±´.git ºÍ .githubÄ¿Â¼
 git pull
 
 xcopy *  ..\jdauto\  /E /Y
