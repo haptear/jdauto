@@ -11,6 +11,9 @@ fnr --cl --dir .\ --fileMask  "*.js,*.md,*.json,*.sh,*.conf,*.sgmodule"  --inclu
 
 fnr --cl --dir .\ --fileMask  "*.js"  --includeSubDirectories --find "haptear/updateTeam" --replace "LXK9301/updateTeam"
 
+fnr --cl --dir .\ --fileMask  "*.js"  --includeSubDirectories --find "if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0)" --replace ""
+
+
 
 
 
