@@ -1,6 +1,7 @@
 ﻿/*
 京东神仙书院
 活动时间:2021-1-20至2021-2-5
+增加自动积分兑换京豆(条件默认为：至少700积分，1.4倍率)
 暂不加入品牌会员，需要自行填写坐标，用于做逛身边好店任务
 环境变量：JD_IMMORTAL_LATLON(经纬度)
 示例：JD_IMMORTAL_LATLON={"lat":33.1, "lng":118.1}
@@ -16,7 +17,7 @@ boxjs IMMORTAL_LATLON
 
 ================Loon==============
 [Script]
-cron "20 8 * * *" script-path=https://raw.githubusercontent.com/haptear/jdauto/master/jd_immortal.js,tag=京东神仙书院
+cron "20 8 * * *" script-path=https://raw.githubusercontent.com/haptear/jdauto/master/jd_immortal.js, tag=京东神仙书院
 
 ===============Surge=================
 京东神仙书院 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/haptear/jdauto/master/jd_immortal.js
@@ -266,6 +267,8 @@ function exchange() {
           if (data && data['retCode'] === "200") {
             const {consumedUserScore, receivedJbeanNum} = data.result
             console.log(`兑换成功，消耗${consumedUserScore}积分，获得${receivedJbeanNum}京豆`)
+            $.msg($.name, ``, `京东账号${$.index} ${$.nickName}\n兑换成功，消耗${consumedUserScore}积分，获得${receivedJbeanNum}京豆`);
+            if ($.isNode()) await notify.sendNotify(`${$.name} - ${$.index} - ${$.nickName}`, `兑换成功，消耗${consumedUserScore}积分，获得${receivedJbeanNum}京豆`);
           } else {
             $.risk = true
             console.log(`账号被风控，无法参与活动`)
