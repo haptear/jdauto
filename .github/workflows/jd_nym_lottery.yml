@@ -6,7 +6,7 @@ name: jd_nym_lottery
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 9,12,16,20 * * *'
+    - cron: '0 20 * * *'
   watch:
     types: started
   repository_dispatch:
