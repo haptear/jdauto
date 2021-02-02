@@ -90,7 +90,7 @@ async function jdImmortalAnswer() {
     if ($.risk) return
     if ($.isNode()) {
       //一天答题上限是15次
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 1; i++) {
         $.log(`\n开始第 ${i + 1}次答题\n`);
         await getQuestions()
         await $.wait(2000)
@@ -120,6 +120,11 @@ function getHomeData(info = false) {
               $.earn = userCoinNum - $.coin
             } else {
               console.log(`当前用户金币${userCoinNum}`)
+            }
+            if(userCoinNum<100)
+            {
+              $.risk = true
+              console.log(`金币小于100，无法参与活动`)
             }
             $.coin = userCoinNum
           } else {
