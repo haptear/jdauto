@@ -2,7 +2,6 @@
  "name": "haptear task gallery",
  "description": "https://github.com/haptear/jdauto",
  "task": [
-    "0 0-18/6 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_818.js, tag=京东手机狂欢城, enabled=true",
     "2 9 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_bean_change.js, tag=京豆变动通知, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true",
     "10 7 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_bean_home.js, tag=领京豆额外奖励, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_bean_home.png, enabled=true",
     "0 0 0 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_blueCoin.js, tag=东东超市兑换奖品, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true",
