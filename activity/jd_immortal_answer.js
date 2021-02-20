@@ -9,7 +9,7 @@
 ============Quantumultx===============
 [task_local]
 #京东神仙书院答题
-20 * * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_immortal_answer.js, tag=京东神仙书院答题, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+20 * * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_immortal_answer.js, tag=京东神仙书院答题, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]

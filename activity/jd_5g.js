@@ -8,7 +8,7 @@
 ============Quantumultx===============
 [task_local]
 #5G狂欢城
-0 0,6,12,18 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_5g.js, tag=5G狂欢城, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+0 0,6,12,18 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_5g.js, tag=5G狂欢城, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
