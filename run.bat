@@ -1,5 +1,5 @@
 rem 先把.github目录设置未隐藏，这样xcopy就不会拷贝.git 和 .github目录
-git pull
+rem git pull
 
 xcopy *  ..\jdauto\  /E /Y
 
