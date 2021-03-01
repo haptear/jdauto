@@ -2,7 +2,7 @@
  * @Author: haptear https://gitee.com/haptear
  * @Date: 2020-08-19 16:12:40 
  * @Last Modified by: haptear
- * @Last Modified time: 2021-2-20 17:52:54
+ * @Last Modified time: 2021-2-27 17:52:54
  */
 const querystring = require("querystring");
 const $ = new Env();
@@ -46,7 +46,7 @@ let QYWX_KEY = '';
 可选推送消息类型(推荐使用图文消息（mpnews）):
 - 文本卡片消息: 0 (数字零)
 - 文本消息: 1 (数字一)
-- 图文消息（mpnews）: 素材库图片id, 可查看此教程(http://note.youdao.com/s/HMiudGkb)
+- 图文消息（mpnews）: 素材库图片id, 可查看此教程(http://note.youdao.com/s/HMiudGkb)或者(https://note.youdao.com/ynoteshare1/index.html?id=1a0c8aff284ad28cbd011b29b3ad0191&type=note)
 */
 let QYWX_AM = '';
 
@@ -128,7 +128,7 @@ if (process.env.PUSH_PLUS_USER) {
 
 async function sendNotify(text, desp, params = {}) {
   //提供6种通知
-  desp += `\n本脚本开源免费使用 By：https://gitee.com/haptear/jd_docker`;
+  desp += `\n\n本脚本开源免费使用 By：https://gitee.com/haptear/jd_docker`;
   await Promise.all([
     serverNotify(text, desp),//微信server酱
     pushPlusNotify(text, desp)//pushplus(推送加)
@@ -464,7 +464,7 @@ function ChangeUserId(desp) {
     for (let i = 0; i < userIdTmp.length; i++) {
       const count = "账号" + (i + 1);
       const count2 = "签到号 " + (i + 1);
-      if (desp.match(count) || desp.match(count2)) {
+      if (desp.match(count2)) {
         userId = userIdTmp[i];
       }
     }
