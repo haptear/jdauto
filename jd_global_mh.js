@@ -9,7 +9,7 @@
 ============Quantumultx===============
 [task_local]
 #京东国际盲盒
-0 9,12,20,21 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_global_mh.js, tag=京东国际盲盒, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/haptear/jd_global_mh.png, enabled=true
+0 9,12,20,21 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_global_mh.js, tag=京东国际盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
