@@ -25,9 +25,9 @@ cron "0 0 * * *" script-path=https://raw.githubusercontent.com/haptear/jdauto/ma
 
 const $ = new Env('京东极速版红包');
 
-const notify = $.isNode() ? require('./sendNotify') : '';
+const notify = $.isNode() ? require('../sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 
 
 let cookiesArr = [], cookie = '', message;
