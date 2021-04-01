@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_superMarket
+name: jd_speed_redpocke
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '31 0,1-23/2 * *'
+    - cron: '0 0 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: superMarket
+    types: speed
 jobs:
   build:
 
@@ -35,9 +35,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京小超】'
+      - name: '运行 京东极速版红包'
         run: |
-          node jd_superMarket.js
+          node jd_speed_redpocke.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
@@ -49,7 +49,3 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          jdSuperMarketUpgrade: ${{ secrets.SUPERMARKET_UPGRADE }}
-          jdBusinessCircleJump: ${{ secrets.BUSINESS_CIRCLE_JUMP }}
-          SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES }}
-          jdSuperMarketLottery: ${{ secrets.SUPERMARKET_LOTTERY }}
