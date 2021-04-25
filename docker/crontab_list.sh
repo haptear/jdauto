@@ -16,8 +16,7 @@
 
 #5G超级盲盒 活动时间：2021-03-19到2021-04-30
 10 0,1-23/4 * * * node /scripts/jd_mohe.js >> /scripts/logs/jd_mohe.log 2>&1
-#京东手机狂欢城活动，每日可获得30+以上京豆（其中20京豆是往期奖励，需第一天参加活动后，第二天才能拿到）活动时间: 2021-4-1至2021-4-20
-0 0-18/6,19-23/1 * * * node /scripts/jd_carnivalcity.js >> /scripts/logs/jd_carnivalcity.log 2>&1
+
 ##############长期活动##############
 # 签到
 7 0,17 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
@@ -31,8 +30,6 @@
 45 */2,23 * * * node /scripts/jd_joy.js >> /scripts/logs/jd_joy.log 2>&1
 # 宠汪汪积分兑换京豆
 0 0-16/8 * * * node /scripts/jd_joy_reward.js >> /scripts/logs/jd_joy_reward.log 2>&1
-#宠汪汪偷好友积分与狗粮
-5 0-23/4 * * * node /scripts/jd_joy_steal.js >> /scripts/logs/jd_joy_steal.log 2>&1
 # 宠汪汪喂食
 35 */1 * * * node /scripts/jd_joy_feedPets.js >> /scripts/logs/jd_joy_feedPets.log 2>&1
 # 宠汪汪邀请助力
@@ -47,8 +44,6 @@
 12 0-23/4 * * * node /scripts/jd_redPacket.js >> /scripts/logs/jd_redPacket.log 2>&1
 # 进店领豆
 6 0 * * * node /scripts/jd_shop.js >> /scripts/logs/jd_shop.log 2>&1
-# 京东天天加速
-28 */3 * * * node /scripts/jd_speed.js >> /scripts/logs/jd_speed.log 2>&1
 # 东东超市
 31 0,1-23/2 * * * node /scripts/jd_superMarket.js >> /scripts/logs/jd_superMarket.log 2>&1
 # 取关京东店铺商品
@@ -72,7 +67,7 @@
 # 东东工厂
 26 * * * * node /scripts/jd_jdfactory.js >> /scripts/logs/jd_jdfactory.log 2>&1
 # 赚京豆(微信小程序)
-12 8,18 * * * node /scripts/jd_syj.js >> /scripts/logs/jd_syj.log 2>&1
+12 0,18,23 * * * node /scripts/jd_syj.js >> /scripts/logs/jd_syj.log 2>&1
 # 京东快递签到
 47 1 * * * node /scripts/jd_kd.js >> /scripts/logs/jd_kd.log 2>&1
 # 京东汽车(签到满500赛点可兑换500京豆)
@@ -80,7 +75,7 @@
 # 领京豆额外奖励(每日可获得3京豆)
 23 4 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
 # 微信小程序京东赚赚
-6 0,1,2,11 * * * node /scripts/jd_jdzz.js >> /scripts/logs/jd_jdzz.log 2>&1
+6 0-5/1,11 * * * node /scripts/jd_jdzz.js >> /scripts/logs/jd_jdzz.log 2>&1
 # crazyJoy自动每日任务
 30 7,23 * * * node /scripts/jd_crazy_joy.js >> /scripts/logs/jd_crazy_joy.log 2>&1
 # 京东汽车旅程赛点兑换金豆
@@ -114,6 +109,14 @@
 #家庭号
 10 6,7 * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
 #京东直播（又回来了）
-30-50/5 12,23 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
+30-50/5 12,23 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1      
 #京小兑
 13 8,16,20 * * * node /scripts/jd_jxd.js >> /scripts/logs/jd_jxd.log 2>&1
+#京东健康社区
+13 1,6,22 * * * node /scripts/jd_health.js >> /scripts/logs/jd_health.log 2>&1
+#京东健康社区收集健康能量
+5-45/20 * * * * node /scripts/jd_health_collect.js >> /scripts/logs/jd_health_collect.log 2>&1
+# 幸运大转盘
+10 10,23 * * * node /scripts/jd_market_lottery.js >> /scripts/logs/jd_market_lottery.log 2>&1
+#TCL
+10 0,23 * * * node /scripts/jd_tcl.js >> /scripts/logs/jd_tcl.log 2>&1
