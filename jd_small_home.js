@@ -1,11 +1,6 @@
 ﻿/*
- * @Author: haptear https://github.com/haptear
- * @Date: 2020-11-12 11:42:12 
- * @Last Modified by: haptear
- * @Last Modified time: 2021-1-22 14:27:20
- */
-/*
 东东小窝 https://raw.githubusercontent.com/haptear/jdauto/master/jd_small_home.js
+Last Modified time: 2021-1-22 14:27:20
 现有功能：
 做日常任务任务，每日抽奖（有机会活动京豆，使用的是免费机会，不消耗WO币）
 自动使用WO币购买装饰品可以获得京豆，分别可获得5,20，50,100,200,400,700，1200京豆）
