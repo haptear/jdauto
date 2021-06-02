@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_zoo
+name: jd_zooCollect
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '33 0,6-23/2 * * *'
+    - cron: '0-59/30 * * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_zoo
+    types: jd_zooCollect
 jobs:
   build:
 
@@ -35,18 +35,17 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 618动物联萌'
+      - name: '运行 618动物联萌收集金币'
         run: |
-          node jd_zoo.js
+          node jd_zooCollect.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          JD_818_SHAREID_NOTIFY: ${{ secrets.JD_818_SHAREID_NOTIFY }}
