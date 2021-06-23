@@ -14,10 +14,10 @@ FileQxRe=$WorkDir/QuantumultX/haptear_cookies.conf
 FileSurge=$WorkDir/Surge/haptear_Task.sgmodule.sgmodule
 
 ## task清单头尾部内容
-CommentsLoon="# IOS Loon Task&Cookies配置 By haptear\n# GitHub主页(https://gitee.com/haptear)\n# TG讨论组 (https://t.me/JD_fruit_pet)\n# TG通知频道 (https://t.me/jdfruit)\n# Loon的Task&Cookies脚本订阅链接: https://raw.githubusercontent.com/haptear/jdauto/master/Loon/haptear_LoonTask.conf\n# 使用方法:打开APP，顶部的配置 -> 脚本 -> 订阅脚本- > 点击右上角+号 -> 添加url链接 (https://raw.githubusercontent.com/haptear/jdauto/master/Loon/haptear_LoonTask.conf)\n\nhostname = me-api.jd.com, draw.jdfcloud.com, jdjoy.jd.com, account.huami.com"
-CommentsQx='{\n  "name": "haptear task gallery",\n  "description": "https://gitee.com/haptear",\n  "task": ['
+CommentsLoon="# IOS Loon Task&Cookies配置 \n# TG通知频道 (https://t.me/jdfruit)\n# 使用方法:打开APP，顶部的配置 -> 脚本 -> 订阅脚本- > 点击右上角+号 -> 添加url链接\n\nhostname = me-api.jd.com, draw.jdfcloud.com, jdjoy.jd.com, account.huami.com"
+CommentsQx='{\n  "name": "haptear task gallery",\n  "description": "see you latter",\n  "task": ['
 CommentsQxRe="hostname = draw.jdfcloud.com, jdjoy.jd.com, account.huami.com, me-api.jd.com"
-CommentsSurgeHead="#!name=haptear iOS Tasks&Cookies Module\n#!desc=iOS Tasks&Cookies 模块配置\n\n# Task&Cookies模块配置 By haptear\n# GitHub主页(https://github.com/haptear/jdauto)\n# TG讨论组 (https://t.me/JD_fruit_pet)\n# TG通知频道 (https://t.me/jdfruit)\n# Surge的Task&Cookies脚本模块地址: https://raw.githubusercontent.com/haptear/jdauto/master/Surge/haptear_Task.sgmodule.sgmodule\n\n[Script]"
+CommentsSurgeHead="#!name=haptear iOS Tasks&Cookies Module\n#!desc=iOS Tasks&Cookies 模块配置\n\n# Task&Cookies模块配置 \n# TG讨论组 (https://t.me/JD_fruit_pet)\n\n[Script]"
 CommentsSurgeTail="\n[MITM]\nhostname = %APPEND% me-api.jd.com, draw.jdfcloud.com, jdjoy.jd.com, account.huami.com"
 
 ## 执行写入
