@@ -6,7 +6,7 @@ name: jd_star_shop
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1,21 * *'
+    - cron: '0 1,21 * * *'
   watch:
     types: started
   repository_dispatch:
