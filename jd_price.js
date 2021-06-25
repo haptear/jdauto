@@ -18,17 +18,17 @@ iOS同时支持使用 NobyDa 与 domplin 脚本的京东 cookie
 ============Quantumultx===============
 [task_local]
 #京东保价
-0 2 * * * https://raw.githubusercontent.com/haptear/jdauto/master/jd_price.js, tag=京东保价, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+0 2 * * * jd_price.js, tag=京东保价, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 2 * * *" script-path=https://raw.githubusercontent.com/haptear/jdauto/master/jd_price.js,tag=京东保价
+cron "0 2 * * *" script-path=jd_price.js,tag=京东保价
 
 ===============Surge=================
-京东保价 = type=cron,cronexp="0 2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/haptear/jdauto/master/jd_price.js
+京东保价 = type=cron,cronexp="0 2 * * *",wake-system=1,timeout=3600,script-path=jd_price.js
 
 ============小火箭=========
-京东保价 = type=cron,script-path=https://raw.githubusercontent.com/haptear/jdauto/master/jd_price.js, cronexpr="0 2 * * *", timeout=3600, enable=true
+京东保价 = type=cron,script-path=jd_price.js, cronexpr="0 2 * * *", timeout=3600, enable=true
  */
 
 const $ = new Env('京东保价');
@@ -91,7 +91,6 @@ if ($.isNode()) {
         $.refundtotalamount = 0;
         $.orderList = new Array();
         $.applyMap = {};
-        // TODO
         $.token = '';
         $.feSt = 'f';
         console.log(`💥 获得首页面，解析超参数`);
