@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 新潮品牌狂'
+      - name: '运行 【新潮品牌狂欢】'
         run: |
           node jd_mcxhd.js
         env:

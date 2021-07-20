@@ -6,7 +6,7 @@ name: jd_mohe
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0,1,4,7,11,13 * * *'
+    - cron: '0 0,1-23/3 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 5G超级盲盒'
+      - name: '运行 【5G超级盲盒】'
         run: |
           node jd_mohe.js
         env:

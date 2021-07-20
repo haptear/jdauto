@@ -6,7 +6,7 @@ name: jd_jxlhb
 on:
   workflow_dispatch:
   schedule:
-    - cron: '20 * * * *'
+    - cron: '4 10 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 京喜领88元红'
+      - name: '运行 【京喜领88元红包】'
         run: |
           node jd_jxlhb.js
         env:

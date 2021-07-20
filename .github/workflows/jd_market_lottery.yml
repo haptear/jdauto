@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 幸运大转盘'
+      - name: '运行 【幸运大转盘】'
         run: |
           node jd_market_lottery.js
         env:
