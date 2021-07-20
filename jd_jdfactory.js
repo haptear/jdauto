@@ -34,8 +34,17 @@ let testNode=$.isNode()?"a":"b";
 console.log('3 '+testNode+'\n')
 
 const notify = $.isNode() ? require('./sendNotify') : '';
+
+console.log('4 \n')
+console.log('4 '+notify+'\n')
+
+console.log('5 \n')
+
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+console.log('5 '+jdCookieNode+'\n')
+
+
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
 //IOS等用户直接用NobyDa的jd cookie
