@@ -6,6 +6,8 @@ let CookieJDs = [
   '',//账号一ck,例:pt_key=XXX;pt_pin=XXX;
   '',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
 ]
+console.log(`开始获取cookie1`);
+console.log(`开始获取cookie2 ${process.env.JD_COOKIE}`);
 // 判断环境变量里面是否有京东ck
 if (process.env.JD_COOKIE) {
   if (process.env.JD_COOKIE.indexOf('&') > -1) {
@@ -16,6 +18,9 @@ if (process.env.JD_COOKIE) {
     CookieJDs = [process.env.JD_COOKIE];
   }
 }
+
+console.log(`开始获取cookie3`);
+
 // if (JSON.stringify(process.env).indexOf('GITHUB')>-1) {
 //   console.log(`请勿使用github action运行此脚本,无论你是从你自己的私库还是其他哪里拉取的源代码，都会导致我被封号\n`);
 //   !(async () => {
