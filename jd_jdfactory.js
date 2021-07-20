@@ -33,13 +33,11 @@ console.log('2 '+isNode+'\n')
 let testNode=$.isNode()?"a":"b";
 console.log('3 '+testNode+'\n')
 
-const notify = $.isNode() ? require('./sendNotify') : '';
-
 console.log('4 \n')
+const notify = $.isNode() ? require('./sendNotify') : '';
 console.log('4 '+notify+'\n')
 
 console.log('5 \n')
-
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 console.log('5 '+jdCookieNode+'\n')
