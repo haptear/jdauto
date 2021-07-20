@@ -30,6 +30,8 @@ console.log('\n====================Hello World====================\n')
 console.log('1\n')
 let isNode=$.isNode();
 console.log('2 '+isNode+'\n')
+let testNode=$.isNode()?"a":"b";
+console.log('3 '+testNode+'\n')
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
