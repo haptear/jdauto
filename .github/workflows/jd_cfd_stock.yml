@@ -6,7 +6,7 @@ name: jd_cfd_stock
 on:
   workflow_dispatch:
   schedule:
-    - cron: '12 15 * * *'
+    - cron: '6 15 * * *'
   watch:
     types: started
   repository_dispatch:

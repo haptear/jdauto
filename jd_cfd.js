@@ -102,7 +102,7 @@ var UserName, index;
                 i = 0;
                 _r.label = 3;
             case 3:
-                if (!(i < cookiesArr.length)) return [3 /*break*/, 86];
+                if (!(i < cookiesArr.length)) return [3 /*break*/, 82];
                 cookie = cookiesArr[i];
                 UserName = decodeURIComponent(cookie.match(/pt_pin=([^;]*)/)[1]);
                 index = i + 1;
@@ -111,7 +111,7 @@ var UserName, index;
                 _a = _r.sent(), isLogin = _a.isLogin, nickName = _a.nickName;
                 if (!isLogin) {
                     notify.sendNotify(__filename.split('/').pop(), "cookie\u5DF2\u5931\u6548\n\u4EAC\u4E1C\u8D26\u53F7" + index + "\uFF1A" + (nickName || UserName));
-                    return [3 /*break*/, 85];
+                    return [3 /*break*/, 81];
                 }
                 console.log("\n\u5F00\u59CB\u3010\u4EAC\u4E1C\u8D26\u53F7" + index + "\u3011" + (nickName || UserName) + "\n");
                 _r.label = 5;
@@ -176,7 +176,10 @@ var UserName, index;
                 if (!(_i < _b.length)) return [3 /*break*/, 25];
                 stage = _b[_i];
                 if (!(res.dwCurProgress >= stage.dwCurStageEndCnt && stage.dwIsAward === 0)) return [3 /*break*/, 24];
-                return [4 /*yield*/, api('user/ComposeGameAward', '__t,dwCurStageEndCnt,strZone', { __t: Date.now(), dwCurStageEndCnt: stage.dwCurStageEndCnt })];
+                return [4 /*yield*/, api('user/ComposeGameAward', '__t,dwCurStageEndCnt,strZone', {
+                        __t: Date.now(),
+                        dwCurStageEndCnt: stage.dwCurStageEndCnt
+                    })];
             case 22:
                 awardRes = _r.sent();
                 console.log(awardRes);
@@ -220,7 +223,13 @@ var UserName, index;
                 if (!(_d < _e.length)) return [3 /*break*/, 35];
                 sign = _e[_d];
                 if (!(sign.dwDayId === res.Data.Sign.dwTodayId)) return [3 /*break*/, 34];
-                return [4 /*yield*/, api('story/RewardSign', '_cfd_t,bizCode,ddwCoin,ddwMoney,dwEnv,dwPrizeLv,dwPrizeType,ptag,source,strPrizePool,strZone', { ddwCoin: sign.ddwCoin, ddwMoney: sign.ddwMoney, dwPrizeLv: sign.dwBingoLevel, dwPrizeType: sign.dwPrizeType, strPrizePool: sign.strPrizePool })];
+                return [4 /*yield*/, api('story/RewardSign', '_cfd_t,bizCode,ddwCoin,ddwMoney,dwEnv,dwPrizeLv,dwPrizeType,ptag,source,strPrizePool,strZone', {
+                        ddwCoin: sign.ddwCoin,
+                        ddwMoney: sign.ddwMoney,
+                        dwPrizeLv: sign.dwBingoLevel,
+                        dwPrizeType: sign.dwPrizeType,
+                        strPrizePool: sign.strPrizePool
+                    })];
             case 33:
                 res = _r.sent();
                 if (res.iRet === 0)
@@ -229,7 +238,11 @@ var UserName, index;
             case 34:
                 _d++;
                 return [3 /*break*/, 32];
-            case 35: return [4 /*yield*/, api('user/QueryUserInfo', '_cfd_t,bizCode,ddwTaskId,dwEnv,ptag,source,strShareId,strZone', { ddwTaskId: '', strShareId: '', strMarkList: 'undefined' })];
+            case 35: return [4 /*yield*/, api('user/QueryUserInfo', '_cfd_t,bizCode,ddwTaskId,dwEnv,ptag,source,strShareId,strZone', {
+                    ddwTaskId: '',
+                    strShareId: '',
+                    strMarkList: 'undefined'
+                })];
             case 36:
                 // 船来了
                 res = _r.sent();
@@ -237,7 +250,12 @@ var UserName, index;
                 console.log(JSON.stringify(res));
                 if (!res.StoryInfo.StoryList[0].Special) return [3 /*break*/, 40];
                 console.log("\u8239\u6765\u4E86\uFF0C\u4E58\u5BA2\u662F" + res.StoryInfo.StoryList[0].Special.strName);
-                return [4 /*yield*/, api('story/SpecialUserOper', '_cfd_t,bizCode,ddwTriggerDay,dwEnv,dwType,ptag,source,strStoryId,strZone,triggerType', { strStoryId: res.StoryInfo.StoryList[0].strStoryId, dwType: '2', triggerType: 0, ddwTriggerDay: res.StoryInfo.StoryList[0].ddwTriggerDay })];
+                return [4 /*yield*/, api('story/SpecialUserOper', '_cfd_t,bizCode,ddwTriggerDay,dwEnv,dwType,ptag,source,strStoryId,strZone,triggerType', {
+                        strStoryId: res.StoryInfo.StoryList[0].strStoryId,
+                        dwType: '2',
+                        triggerType: 0,
+                        ddwTriggerDay: res.StoryInfo.StoryList[0].ddwTriggerDay
+                    })];
             case 37:
                 shipRes = _r.sent();
                 console.log(shipRes);
@@ -245,7 +263,12 @@ var UserName, index;
                 return [4 /*yield*/, TS_USER_AGENTS_1.wait(30000)];
             case 38:
                 _r.sent();
-                return [4 /*yield*/, api('story/SpecialUserOper', '_cfd_t,bizCode,ddwTriggerDay,dwEnv,dwType,ptag,source,strStoryId,strZone,triggerType', { strStoryId: res.StoryInfo.StoryList[0].strStoryId, dwType: '3', triggerType: 0, ddwTriggerDay: res.StoryInfo.StoryList[0].ddwTriggerDay })];
+                return [4 /*yield*/, api('story/SpecialUserOper', '_cfd_t,bizCode,ddwTriggerDay,dwEnv,dwType,ptag,source,strStoryId,strZone,triggerType', {
+                        strStoryId: res.StoryInfo.StoryList[0].strStoryId,
+                        dwType: '3',
+                        triggerType: 0,
+                        ddwTriggerDay: res.StoryInfo.StoryList[0].ddwTriggerDay
+                    })];
             case 39:
                 shipRes = _r.sent();
                 if (shipRes.iRet === 0)
@@ -295,7 +318,10 @@ var UserName, index;
                 res = _r.sent();
                 if (!(res.Data.StoryInfo.StoryList.length !== 0)) return [3 /*break*/, 53];
                 console.log('有垃圾');
-                return [4 /*yield*/, api('story/RubbishOper', '_cfd_t,bizCode,dwEnv,dwRewardType,dwType,ptag,source,strZone', { dwType: '1', dwRewardType: 0 })];
+                return [4 /*yield*/, api('story/RubbishOper', '_cfd_t,bizCode,dwEnv,dwRewardType,dwType,ptag,source,strZone', {
+                        dwType: '1',
+                        dwRewardType: 0
+                    })];
             case 47:
                 _r.sent();
                 return [4 /*yield*/, TS_USER_AGENTS_1.wait(1000)];
@@ -305,7 +331,11 @@ var UserName, index;
                 _r.label = 49;
             case 49:
                 if (!(j < 9)) return [3 /*break*/, 53];
-                return [4 /*yield*/, api('story/RubbishOper', '_cfd_t,bizCode,dwEnv,dwRewardType,dwRubbishId,dwType,ptag,source,strZone', { dwType: '2', dwRewardType: 0, dwRubbishId: j })];
+                return [4 /*yield*/, api('story/RubbishOper', '_cfd_t,bizCode,dwEnv,dwRewardType,dwRubbishId,dwType,ptag,source,strZone', {
+                        dwType: '2',
+                        dwRewardType: 0,
+                        dwRubbishId: j
+                    })];
             case 50:
                 res = _r.sent();
                 console.log('垃圾分类：', res.Data.RubbishGame.AllRubbish.ddwCoin);
@@ -394,7 +424,10 @@ var UserName, index;
             case 71:
                 if (!(t.awardStatus === 2 && t.completedTimes < t.targetTimes && ([1, 2, 3, 4].includes(t.orderId)))) return [3 /*break*/, 74];
                 console.log('做任务:', t.taskId, t.taskName, t.completedTimes, t.targetTimes);
-                return [4 /*yield*/, mainTask('DoTask', '_cfd_t,bizCode,configExtra,dwEnv,ptag,source,strZone,taskId', { taskId: t.taskId, configExtra: '' })];
+                return [4 /*yield*/, mainTask('DoTask', '_cfd_t,bizCode,configExtra,dwEnv,ptag,source,strZone,taskId', {
+                        taskId: t.taskId,
+                        configExtra: ''
+                    })];
             case 72:
                 res = _r.sent();
                 console.log('做任务:', res);
@@ -409,102 +442,103 @@ var UserName, index;
                 _p = 0, _q = ['food', 'fun', 'shop', 'sea'];
                 _r.label = 76;
             case 76:
-                if (!(_p < _q.length)) return [3 /*break*/, 85];
+                if (!(_p < _q.length)) return [3 /*break*/, 81];
                 b = _q[_p];
                 return [4 /*yield*/, api('user/GetBuildInfo', '_cfd_t,bizCode,dwEnv,dwType,ptag,source,strBuildIndex,strZone', { strBuildIndex: b })];
             case 77:
                 res = _r.sent();
                 console.log(b + "\u5347\u7EA7\u9700\u8981:", res.ddwNextLvlCostCoin);
-                return [4 /*yield*/, TS_USER_AGENTS_1.wait(1000)];
+                return [4 /*yield*/, api('user/CollectCoin', '_cfd_t,bizCode,dwEnv,dwType,ptag,source,strBuildIndex,strZone', {
+                        strBuildIndex: b,
+                        dwType: '1'
+                    })];
             case 78:
-                _r.sent();
-                if (!(res.dwCanLvlUp === 1)) return [3 /*break*/, 81];
-                return [4 /*yield*/, api('user/BuildLvlUp', '_cfd_t,bizCode,ddwCostCoin,dwEnv,ptag,source,strBuildIndex,strZone', { ddwCostCoin: res.ddwNextLvlCostCoin, strBuildIndex: b })];
-            case 79:
-                res = _r.sent();
-                if (!(res.iRet === 0)) return [3 /*break*/, 81];
-                console.log("\u5347\u7EA7\u6210\u529F");
-                return [4 /*yield*/, TS_USER_AGENTS_1.wait(2000)];
-            case 80:
-                _r.sent();
-                _r.label = 81;
-            case 81: return [4 /*yield*/, api('user/CollectCoin', '_cfd_t,bizCode,dwEnv,dwType,ptag,source,strBuildIndex,strZone', { strBuildIndex: b, dwType: '1' })];
-            case 82:
+                /*
+                await wait(1000)
+                // 在提现时升级
+                if (res.dwCanLvlUp === 1) {
+                  res = await api('user/BuildLvlUp', '_cfd_t,bizCode,ddwCostCoin,dwEnv,ptag,source,strBuildIndex,strZone', {ddwCostCoin: res.ddwNextLvlCostCoin, strBuildIndex: b})
+                  if (res.iRet === 0) {
+                    console.log(`升级成功`)
+                    await wait(2000)
+                  }
+                }
+                */
                 res = _r.sent();
                 console.log(b + "\u6536\u91D1\u5E01:", res.ddwCoin);
                 return [4 /*yield*/, TS_USER_AGENTS_1.wait(1000)];
-            case 83:
+            case 79:
                 _r.sent();
-                _r.label = 84;
-            case 84:
+                _r.label = 80;
+            case 80:
                 _p++;
                 return [3 /*break*/, 76];
-            case 85:
+            case 81:
                 i++;
                 return [3 /*break*/, 3];
-            case 86:
-                if (!(HELP_HW === 'true')) return [3 /*break*/, 90];
-                _r.label = 87;
-            case 87:
-                _r.trys.push([87, 89, , 90]);
-                return [4 /*yield*/, axios_1.default.get("https://api.sharecode.ga/api/HW_CODES")];
-            case 88:
+            case 82:
+                if (!(HELP_HW === 'true')) return [3 /*break*/, 86];
+                _r.label = 83;
+            case 83:
+                _r.trys.push([83, 85, , 86]);
+                return [4 /*yield*/, axios_1.default.get("https://api.sharecode.ga/api/HW_CODES", { timeout: 10000 })];
+            case 84:
                 data = (_r.sent()).data;
                 shareCodes = __spreadArray(__spreadArray([], shareCodes), data.jxcfd);
                 console.log('获取HelloWorld助力码成功');
-                return [3 /*break*/, 90];
-            case 89:
+                return [3 /*break*/, 86];
+            case 85:
                 e_2 = _r.sent();
                 console.log('获取HelloWorld助力码出错');
-                return [3 /*break*/, 90];
-            case 90:
-                if (!(HELP_POOL === 'true')) return [3 /*break*/, 95];
-                _r.label = 91;
-            case 91:
-                _r.trys.push([91, 93, , 94]);
-                return [4 /*yield*/, axios_1.default.get('https://api.sharecode.ga/api/jxcfd/20')];
-            case 92:
+                return [3 /*break*/, 86];
+            case 86:
+                if (!(HELP_POOL === 'true')) return [3 /*break*/, 91];
+                _r.label = 87;
+            case 87:
+                _r.trys.push([87, 89, , 90]);
+                return [4 /*yield*/, axios_1.default.get('https://api.sharecode.ga/api/jxcfd/20', { timeout: 10000 })];
+            case 88:
                 data = (_r.sent()).data;
                 console.log('获取到20个随机助力码:', data.data);
                 shareCodes = __spreadArray(__spreadArray([], shareCodes), data.data);
-                return [3 /*break*/, 94];
-            case 93:
+                return [3 /*break*/, 90];
+            case 89:
                 e_3 = _r.sent();
                 console.log('获取助力池失败');
-                return [3 /*break*/, 94];
-            case 94: return [3 /*break*/, 96];
-            case 95:
+                return [3 /*break*/, 90];
+            case 90: return [3 /*break*/, 92];
+            case 91:
                 console.log('你的设置是不帮助助力池');
-                _r.label = 96;
-            case 96:
+                _r.label = 92;
+            case 92:
                 i = 0;
-                _r.label = 97;
-            case 97:
-                if (!(i < cookiesArr.length)) return [3 /*break*/, 103];
+                _r.label = 93;
+            case 93:
+                if (!(i < cookiesArr.length)) return [3 /*break*/, 99];
                 j = 0;
-                _r.label = 98;
-            case 98:
-                if (!(j < shareCodes.length)) return [3 /*break*/, 102];
+                _r.label = 94;
+            case 94:
+                if (!(j < shareCodes.length)) return [3 /*break*/, 98];
                 cookie = cookiesArr[i];
                 console.log("\u8D26\u53F7" + (i + 1) + "\u53BB\u52A9\u529B:", shareCodes[j]);
                 return [4 /*yield*/, api('story/helpbystage', '_cfd_t,bizCode,dwEnv,ptag,source,strShareId,strZone', { strShareId: shareCodes[j] })];
-            case 99:
+            case 95:
                 res = _r.sent();
                 console.log('助力:', res);
                 if (res.iRet === 2232 || res.sErrMsg === '今日助力次数达到上限，明天再来帮忙吧~') {
-                    return [3 /*break*/, 102];
+                    return [3 /*break*/, 98];
                 }
                 return [4 /*yield*/, TS_USER_AGENTS_1.wait(3000)];
-            case 100:
+            case 96:
                 _r.sent();
-                _r.label = 101;
-            case 101:
+                _r.label = 97;
+            case 97:
                 j++;
-                return [3 /*break*/, 98];
-            case 102:
+                return [3 /*break*/, 94];
+            case 98:
                 i++;
-                return [3 /*break*/, 97];
-            case 103: return [2 /*return*/];
+                return [3 /*break*/, 93];
+            case 99: return [2 /*return*/];
         }
     });
 }); })();
@@ -591,14 +625,18 @@ function makeShareCodes() {
                     return [4 /*yield*/, TS_USER_AGENTS_1.getFarmShareCode(cookie)];
                 case 2:
                     farm = _a.sent();
-                    return [4 /*yield*/, api('user/QueryUserInfo', '_cfd_t,bizCode,ddwTaskId,dwEnv,ptag,source,strShareId,strZone', { ddwTaskId: '', strShareId: '', strMarkList: 'undefined' })];
+                    return [4 /*yield*/, api('user/QueryUserInfo', '_cfd_t,bizCode,ddwTaskId,dwEnv,ptag,source,strShareId,strZone', {
+                            ddwTaskId: '',
+                            strShareId: '',
+                            strMarkList: 'undefined'
+                        })];
                 case 3:
                     res = _a.sent();
                     console.log('助力码:', res.strMyShareId);
                     shareCodes.push(res.strMyShareId);
                     pin = cookie.match(/pt_pin=([^;]*)/)[1];
                     pin = ts_md5_1.Md5.hashStr(pin);
-                    axios_1.default.get("https://api.sharecode.ga/api/autoInsert?db=jxcfd&code=" + res.strMyShareId + "&bean=" + bean + "&farm=" + farm + "&pin=" + pin)
+                    axios_1.default.get("https://api.sharecode.ga/api/autoInsert?db=jxcfd&code=" + res.strMyShareId + "&bean=" + bean + "&farm=" + farm + "&pin=" + pin, { timeout: 10000 })
                         .then(function (res) {
                         if (res.data.code === 200)
                             console.log('已自动提交助力码');
