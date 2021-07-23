@@ -6,7 +6,7 @@ name: jd_yili_cow
 on:
   workflow_dispatch:
   schedule:
-    - cron: '27 15 * * *'
+    - cron: '30 15 * * *'
   watch:
     types: started
   repository_dispatch:

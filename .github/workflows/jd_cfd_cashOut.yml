@@ -6,7 +6,7 @@ name: jd_cfd_cashOut
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 15 * * *'
+    - cron: '3 15 * * *'
   watch:
     types: started
   repository_dispatch:
