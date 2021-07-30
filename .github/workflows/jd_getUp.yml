@@ -6,7 +6,7 @@ name: jd_getUp
 on:
   workflow_dispatch:
   schedule:
-    - cron: '21 15 * * *'
+    - cron: '18 15 * * *'
   watch:
     types: started
   repository_dispatch:

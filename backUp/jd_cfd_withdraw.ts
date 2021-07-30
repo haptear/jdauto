@@ -1,4 +1,5 @@
 /**
+ * 必须编译成js再运行
  * 可在31~59秒启动，0~30秒自动放行
  * 只在00:00:xx和12:00:xx升级建筑
  * 默认：0点1元，12点0.5，其他0.1
@@ -31,9 +32,9 @@ function f1(cookies: string) {
   return new Promise<void>(async resolve => {
     cookie = cookies
     while (1) {
-      if (new Date().getSeconds() < 59)
+      if (new Date().getSeconds() < 30)
         break
-      await wait(1000)
+      await wait(100)
     }
 
     // 只在00:00:00和12:00:00升级建筑
@@ -133,6 +134,7 @@ function api(fn: string, stk: string, params: Params = {}) {
           url += `&${key}=${params[key]}`
       }
     }
+    console.log(cookie)
     url += '&h5st=' + decrypt(stk, url)
     let {data} = await axios.get(url, {
       headers: {

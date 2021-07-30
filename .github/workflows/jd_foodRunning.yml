@@ -6,7 +6,7 @@ name: jd_foodRunning
 on:
   workflow_dispatch:
   schedule:
-    - cron: '18 15 * * *'
+    - cron: '15 15 * * *'
   watch:
     types: started
   repository_dispatch:

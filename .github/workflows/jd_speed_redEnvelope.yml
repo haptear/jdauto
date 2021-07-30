@@ -6,7 +6,7 @@ name: jd_speed_redEnvelope
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 15 * * *'
+    - cron: '27 15 * * *'
   watch:
     types: started
   repository_dispatch:
