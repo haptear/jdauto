@@ -6,7 +6,7 @@ name: jd_qq_pasture
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 15 * * *'
+    - cron: '39 15 * * *'
   watch:
     types: started
   repository_dispatch:

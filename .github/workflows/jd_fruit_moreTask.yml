@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_foodRunning
+name: jd_fruit_moreTask
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '21 15 * * *'
+    - cron: '24 15 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_foodRunning
+    types: jd_fruit_moreTask
 jobs:
   build:
 
@@ -35,9 +35,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【jd_foodRunning】'
+      - name: '运行 【jd_fruit_moreTask】'
         run: |
-          node jd_foodRunning.js
+          node jd_fruit_moreTask.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}

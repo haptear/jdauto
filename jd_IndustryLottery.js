@@ -58,17 +58,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * cron: 0 9,12 * * *
- */
 var axios_1 = __importDefault(require("axios"));
-var TS_USER_AGENTS_1 = __importStar(require("./TS_USER_AGENTS"));
+var TS_USER_AGENTS_1 = require("./TS_USER_AGENTS");
 var dotenv = __importStar(require("dotenv"));
 var notify = require('./sendNotify');
+var USER_AGENT = 'jdpingou';
 dotenv.config();
-var cookie = '', res = '', UserName, index, id = randomString(40);
+var cookie = '', res = '';
+var UserName, index;
 !(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var cookiesArr, i, _a, isLogin, nickName, j, homeRes, homeRes, _i, _b, t, e_1;
+    var cookiesArr, i, _a, isLogin, nickName, k, _i, _b, t, body, j;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0: return [4 /*yield*/, TS_USER_AGENTS_1.requireConfig()];
@@ -77,7 +76,7 @@ var cookie = '', res = '', UserName, index, id = randomString(40);
                 i = 0;
                 _c.label = 2;
             case 2:
-                if (!(i < cookiesArr.length)) return [3 /*break*/, 25];
+                if (!(i < cookiesArr.length)) return [3 /*break*/, 22];
                 cookie = cookiesArr[i];
                 UserName = decodeURIComponent(cookie.match(/pt_pin=([^;]*)/)[1]);
                 index = i + 1;
@@ -86,118 +85,127 @@ var cookie = '', res = '', UserName, index, id = randomString(40);
                 _a = _c.sent(), isLogin = _a.isLogin, nickName = _a.nickName;
                 if (!isLogin) {
                     notify.sendNotify(__filename.split('/').pop(), "cookie\u5DF2\u5931\u6548\n\u4EAC\u4E1C\u8D26\u53F7" + index + "\uFF1A" + (nickName || UserName));
-                    return [3 /*break*/, 24];
+                    return [3 /*break*/, 21];
                 }
                 console.log("\n\u5F00\u59CB\u3010\u4EAC\u4E1C\u8D26\u53F7" + index + "\u3011" + (nickName || UserName) + "\n");
-                j = 0;
+                k = 0;
                 _c.label = 4;
             case 4:
-                if (!(j < 3)) return [3 /*break*/, 24];
-                console.log("Round:" + (j + 1));
-                return [4 /*yield*/, api('beanTaskList', { "viewChannel": "AppHome" })];
+                if (!(k < 10)) return [3 /*break*/, 15];
+                return [4 /*yield*/, getTask()];
             case 5:
                 res = _c.sent();
+                _i = 0, _b = res.data.taskConfig;
                 _c.label = 6;
             case 6:
-                _c.trys.push([6, 20, 21, 23]);
-                if (!!res.data.viewAppHome.takenTask) return [3 /*break*/, 8];
-                return [4 /*yield*/, api('beanHomeIconDoTask', { "flag": "0", "viewChannel": "AppHome" })];
-            case 7:
-                homeRes = _c.sent();
-                console.log(homeRes.data.remindMsg);
-                _c.label = 8;
-            case 8:
-                if (!!res.data.viewAppHome.doneTask) return [3 /*break*/, 10];
-                return [4 /*yield*/, api('beanHomeIconDoTask', { "flag": "1", "viewChannel": "AppHome" })];
-            case 9:
-                homeRes = _c.sent();
-                console.log(homeRes.data.remindMsg);
-                _c.label = 10;
-            case 10:
-                _i = 0, _b = res.data.taskInfos;
-                _c.label = 11;
-            case 11:
-                if (!(_i < _b.length)) return [3 /*break*/, 19];
+                if (!(_i < _b.length)) return [3 /*break*/, 12];
                 t = _b[_i];
-                if (!(t.status === 1)) return [3 /*break*/, 18];
-                console.log(t.taskName);
-                return [4 /*yield*/, api('beanDoTask', {
-                        "actionType": t.taskType === 3 ? 0 : 1,
-                        "taskToken": t.subTaskVOS[0].taskToken
-                    })];
-            case 12:
+                if (!(t.itemCount !== t.finishCount)) return [3 /*break*/, 11];
+                body = {
+                    "configCode": "e1a458713a854e2abb1db2772e540532",
+                    "taskType": t.taskType,
+                    "itemId": t.taskItem.itemId
+                };
+                return [4 /*yield*/, api('doTask', body)];
+            case 7:
                 res = _c.sent();
-                if (res.data.bizMsg)
-                    console.log(res.data.bizMsg);
-                else {
-                    console.log(res);
-                }
+                console.log(res);
                 return [4 /*yield*/, TS_USER_AGENTS_1.wait(2000)];
+            case 8:
+                _c.sent();
+                return [4 /*yield*/, api("getReward", body)];
+            case 9:
+                res = _c.sent();
+                console.log(res);
+                return [4 /*yield*/, TS_USER_AGENTS_1.wait(t.viewTime * 1000)];
+            case 10:
+                _c.sent();
+                return [3 /*break*/, 12];
+            case 11:
+                _i++;
+                return [3 /*break*/, 6];
+            case 12: return [4 /*yield*/, TS_USER_AGENTS_1.wait(3000)];
             case 13:
                 _c.sent();
-                if (!(t.taskType !== 3)) return [3 /*break*/, 16];
-                return [4 /*yield*/, TS_USER_AGENTS_1.wait(1500)];
+                _c.label = 14;
             case 14:
-                _c.sent();
-                return [4 /*yield*/, api('beanDoTask', { "actionType": 0, "taskToken": t.subTaskVOS[0].taskToken })];
-            case 15:
-                res = _c.sent();
-                if (res.data.bizMsg)
-                    console.log(res.data.bizMsg);
-                _c.label = 16;
-            case 16: return [4 /*yield*/, TS_USER_AGENTS_1.wait(1000)];
-            case 17:
-                _c.sent();
-                _c.label = 18;
-            case 18:
-                _i++;
-                return [3 /*break*/, 11];
-            case 19: return [3 /*break*/, 23];
-            case 20:
-                e_1 = _c.sent();
-                return [3 /*break*/, 23];
-            case 21: return [4 /*yield*/, TS_USER_AGENTS_1.wait(2000)];
-            case 22:
-                _c.sent();
-                return [7 /*endfinally*/];
-            case 23:
-                j++;
+                k++;
                 return [3 /*break*/, 4];
-            case 24:
+            case 15: return [4 /*yield*/, getTask()];
+            case 16:
+                res = _c.sent();
+                console.log("\u6709" + res.data.chanceLeft + "\u6B21\u62BD\u5956\u673A\u4F1A");
+                j = 0;
+                _c.label = 17;
+            case 17:
+                if (!(j < res.data.chanceLeft)) return [3 /*break*/, 21];
+                return [4 /*yield*/, join()];
+            case 18:
+                _c.sent();
+                return [4 /*yield*/, TS_USER_AGENTS_1.wait(5000)];
+            case 19:
+                _c.sent();
+                _c.label = 20;
+            case 20:
+                j++;
+                return [3 /*break*/, 17];
+            case 21:
                 i++;
                 return [3 /*break*/, 2];
-            case 25: return [2 /*return*/];
+            case 22: return [2 /*return*/];
         }
     });
 }); })();
 function api(fn, body) {
-    var _this = this;
-    return new Promise(function (resolve) { return __awaiter(_this, void 0, void 0, function () {
+    return __awaiter(this, void 0, void 0, function () {
         var data;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, axios_1.default.get("https://api.m.jd.com/client.action?functionId=" + fn + "&body=" + encodeURIComponent(JSON.stringify(body)) + "&appid=ld&client=m&uuid=" + id + "&openudid=" + id, {
+                case 0: return [4 /*yield*/, axios_1.default.post("https://jdjoy.jd.com/module/task/draw/" + fn, body, {
                         headers: {
-                            'User-Agent': TS_USER_AGENTS_1.default,
-                            'Host': 'api.m.jd.com',
-                            'Connection': 'keep-alive',
-                            'Accept-Language': 'zh-cn',
-                            'Referer': 'https://h5.m.jd.com/rn/42yjy8na6pFsq1cx9MJQ5aTgu3kX/index.html',
+                            'Host': 'jdjoy.jd.com',
+                            'Referer': 'https://prodev.m.jd.com/mall/active/ebLz35DwiVumB6pcrGkqmnhCgmC/index.html',
+                            'User-Agent': USER_AGENT,
+                            'Origin': 'https://prodev.m.jd.com',
+                            'Content-Type': 'application/json',
                             'Cookie': cookie
                         }
                     })];
                 case 1:
                     data = (_a.sent()).data;
-                    resolve(data);
+                    return [2 /*return*/, data];
+            }
+        });
+    });
+}
+function getTask() {
+    return __awaiter(this, void 0, void 0, function () {
+        var data;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, axios_1.default.get("https://jdjoy.jd.com/module/task/draw/get?configCode=e1a458713a854e2abb1db2772e540532&unionCardCode=", {
+                        headers: { 'user-agent': USER_AGENT, 'cookie': cookie }
+                    })];
+                case 1:
+                    data = (_a.sent()).data;
+                    return [2 /*return*/, data];
+            }
+        });
+    });
+}
+function join() {
+    return __awaiter(this, void 0, void 0, function () {
+        var data;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, axios_1.default.get("https://jdjoy.jd.com/module/task/draw/join?configCode=e1a458713a854e2abb1db2772e540532&fp=&eid=", {
+                        headers: { 'user-agent': USER_AGENT, 'cookie': cookie }
+                    })];
+                case 1:
+                    data = (_a.sent()).data;
+                    console.log("\u62BD\u4E2D\uFF1A" + data.data.rewardName);
                     return [2 /*return*/];
             }
         });
-    }); });
-}
-function randomString(e) {
-    e = e || 32;
-    var t = "abcdefhijkmnprstwxyz123456789", a = t.length, n = "";
-    for (var i = 0; i < e; i++)
-        n += t.charAt(Math.floor(Math.random() * a));
-    return n;
+    });
 }

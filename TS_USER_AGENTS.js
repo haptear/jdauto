@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,8 +58,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRandomNumberByRange = exports.wait = exports.requireConfig = exports.getFarmShareCode = exports.getBeanShareCode = exports.TotalBean = void 0;
+exports.getJxToken = exports.decrypt = exports.requestAlgo = exports.jd_joy_invokeKey = exports.getRandomNumberByRange = exports.wait = exports.requireConfig = exports.getFarmShareCode = exports.getBeanShareCode = exports.TotalBean = void 0;
 var axios_1 = __importDefault(require("axios"));
+var date_fns_1 = require("date-fns");
+var dotenv = __importStar(require("dotenv"));
+var ts_md5_1 = require("ts-md5");
+var CryptoJS = require('crypto-js');
+dotenv.config();
+var appId = 10028, fingerprint, token = '', enCryptMethodJD;
 var USER_AGENTS = [
     "jdapp;android;10.0.2;10;network/wifi;Mozilla/5.0 (Linux; Android 10; ONEPLUS A5010 Build/QKQ1.191014.012; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045230 Mobile Safari/537.36",
     "jdapp;iPhone;10.0.2;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
@@ -79,6 +104,8 @@ var USER_AGENTS = [
     "jdapp;android;10.0.2;10;network/wifi;Mozilla/5.0 (Linux; Android 10; MI 8 Build/QKQ1.190828.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045227 Mobile Safari/537.36",
     "jdapp;iPhone;10.0.2;14.1;network/wifi;Mozilla/5.0 (iPhone; CPU iPhone OS 14_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
 ];
+var jd_joy_invokeKey = "value1";
+exports.jd_joy_invokeKey = jd_joy_invokeKey;
 function getRandomNumberByRange(start, end) {
     return Math.floor(Math.random() * (end - start) + start);
 }
@@ -199,4 +226,118 @@ function wait(t) {
     });
 }
 exports.wait = wait;
+function requestAlgo() {
+    return __awaiter(this, void 0, void 0, function () {
+        var _this = this;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, generateFp()];
+                case 1:
+                    fingerprint = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve) { return __awaiter(_this, void 0, void 0, function () {
+                            var data, enCryptMethodJDString;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0: return [4 /*yield*/, axios_1.default.post('https://cactus.jd.com/request_algo?g_ty=ajax', {
+                                            "version": "1.0",
+                                            "fp": fingerprint,
+                                            "appId": appId,
+                                            "timestamp": Date.now(),
+                                            "platform": "web",
+                                            "expandParams": ""
+                                        }, {
+                                            "headers": {
+                                                'Authority': 'cactus.jd.com',
+                                                'Pragma': 'no-cache',
+                                                'Cache-Control': 'no-cache',
+                                                'Accept': 'application/json',
+                                                'User-Agent': USER_AGENT,
+                                                'Content-Type': 'application/json',
+                                                'Origin': 'https://st.jingxi.com',
+                                                'Sec-Fetch-Site': 'cross-site',
+                                                'Sec-Fetch-Mode': 'cors',
+                                                'Sec-Fetch-Dest': 'empty',
+                                                'Referer': 'https://st.jingxi.com/',
+                                                'Accept-Language': 'zh-CN,zh;q=0.9,zh-TW;q=0.8,en;q=0.7'
+                                            },
+                                        })];
+                                    case 1:
+                                        data = (_a.sent()).data;
+                                        if (data['status'] === 200) {
+                                            token = data.data.result.tk;
+                                            console.log('token:', token);
+                                            enCryptMethodJDString = data.data.result.algo;
+                                            if (enCryptMethodJDString)
+                                                enCryptMethodJD = new Function("return " + enCryptMethodJDString)();
+                                        }
+                                        else {
+                                            console.log("fp: " + fingerprint);
+                                            console.log('request_algo 签名参数API请求失败:');
+                                        }
+                                        resolve();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); })];
+            }
+        });
+    });
+}
+exports.requestAlgo = requestAlgo;
+function generateFp() {
+    var e = "0123456789";
+    var a = 13;
+    var i = '';
+    for (; a--;)
+        i += e[Math.random() * e.length | 0];
+    return (i + Date.now()).slice(0, 16);
+}
+function getQueryString(url, name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = url.split('?')[1].match(reg);
+    if (r != null)
+        return unescape(r[2]);
+    return '';
+}
+function decrypt(stk, url) {
+    var timestamp = (date_fns_1.format(new Date(), 'yyyyMMddhhmmssSSS'));
+    var hash1;
+    if (fingerprint && token && enCryptMethodJD) {
+        hash1 = enCryptMethodJD(token, fingerprint.toString(), timestamp.toString(), appId.toString(), CryptoJS).toString(CryptoJS.enc.Hex);
+    }
+    else {
+        var random = '5gkjB6SpmC9s';
+        token = "tk01wcdf61cb3a8nYUtHcmhSUFFCfddDPRvKvYaMjHkxo6Aj7dhzO+GXGFa9nPXfcgT+mULoF1b1YIS1ghvSlbwhE0Xc";
+        fingerprint = 9686767825751161;
+        var str = "" + token + fingerprint + timestamp + appId + random;
+        hash1 = CryptoJS.SHA512(str, token).toString(CryptoJS.enc.Hex);
+    }
+    var st = '';
+    stk.split(',').map(function (item, index) {
+        st += item + ":" + getQueryString(url, item) + (index === stk.split(',').length - 1 ? '' : '&');
+    });
+    var hash2 = CryptoJS.HmacSHA256(st, hash1.toString()).toString(CryptoJS.enc.Hex);
+    return encodeURIComponent(["".concat(timestamp.toString()), "".concat(fingerprint.toString()), "".concat(appId.toString()), "".concat(token), "".concat(hash2)].join(";"));
+}
+exports.decrypt = decrypt;
+function getJxToken(cookie) {
+    function generateStr(input) {
+        var src = 'abcdefghijklmnopqrstuvwxyz1234567890';
+        var res = '';
+        for (var i = 0; i < input; i++) {
+            res += src[Math.floor(src.length * Math.random())];
+        }
+        return res;
+    }
+    var phoneId = generateStr(40);
+    var timestamp = Date.now().toString();
+    var nickname = cookie.match(/pt_pin=([^;]*)/)[1];
+    var jstoken = ts_md5_1.Md5.hashStr('' + decodeURIComponent(nickname) + timestamp + phoneId + 'tPOamqCuk9NLgVPAljUyIHcPRmKlVxDy');
+    return {
+        'strPgtimestamp': timestamp,
+        'strPhoneID': phoneId,
+        'strPgUUNum': jstoken
+    };
+}
+exports.getJxToken = getJxToken;
 exports.default = USER_AGENT;
