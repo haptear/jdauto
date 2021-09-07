@@ -473,21 +473,12 @@ $.post = injectToRequest($.post.bind($))
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       $.isLogin = true;
-      $.nickName = '';
-      await TotalBean();
+      $.nickName = $.UserName;
       if (!require('./JS_USER_AGENTS').HelloWorld) {
         console.log(`\n【京东账号${$.index}】${$.nickName || $.UserName}：运行环境检测失败\n`);
         continue
       }
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
-      if (!$.isLogin) {
-        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
-
-        if ($.isNode()) {
-          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        }
-        continue
-      }
       message = '';
       subTitle = '';
 
@@ -561,9 +552,9 @@ $.post = injectToRequest($.post.bind($))
 function getFollowChannels() {
   return new Promise(resolve => {
     let lkt = new Date().getTime()
-    let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.get({
-      url: `https://jdjoy.jd.com/common/pet/getFollowChannels?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+      url: `https://jdjoy.jd.com/common/pet/getFollowChannels?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0`,
       headers: {
         lkt: lkt,
         lks: lks,
@@ -584,9 +575,9 @@ function getFollowChannels() {
 function taskList() {
   return new Promise(resolve => {
     let lkt = new Date().getTime()
-    let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.get({
-      url: `https://jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+      url: `https://jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0`,
       headers: {
         lkt: lkt,
         lks: lks,
@@ -615,9 +606,9 @@ function taskList() {
 function beforeTask(fn, shopId) {
   return new Promise(resolve => {
     let lkt = new Date().getTime()
-    let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.get({
-      url: `https://jdjoy.jd.com/common/pet/icon/click?iconCode=${fn}&linkAddr=${shopId}&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+      url: `https://jdjoy.jd.com/common/pet/icon/click?iconCode=${fn}&linkAddr=${shopId}&reqSource=h5&invokeKey=RtKLB8euDo7KwsO0`,
       headers: {
         lkt: lkt,
         lks: lks,
@@ -641,9 +632,9 @@ function beforeTask(fn, shopId) {
 function followShop(shopId) {
   return new Promise(resolve => {
     let lkt = new Date().getTime()
-    let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.post({
-      url: `https://jdjoy.jd.com/common/pet/followShop?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+      url: `https://jdjoy.jd.com/common/pet/followShop?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0`,
       headers: {
         lkt: lkt,
         lks: lks,
@@ -668,9 +659,9 @@ function followShop(shopId) {
 function doTask(body, fnId = 'scan') {
   return new Promise(resolve => {
     let lkt = new Date().getTime()
-    let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.post({
-      url: `https://jdjoy.jd.com/common/pet/${fnId}?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+      url: `https://jdjoy.jd.com/common/pet/${fnId}?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0`,
       headers: {
         'lkt': lkt,
         'lks': lks,
@@ -705,9 +696,9 @@ function feed() {
   let feedNum = process.env.feedNum ? process.env.feedNum : 80
   return new Promise(resolve => {
     let lkt = new Date().getTime()
-    let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.post({
-      url: `https://jdjoy.jd.com/common/pet/enterRoom/h5?invitePin=&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+      url: `https://jdjoy.jd.com/common/pet/enterRoom/h5?invitePin=&reqSource=h5&invokeKey=RtKLB8euDo7KwsO0`,
       headers: {
         'lkt': lkt,
         'lks': lks,
@@ -730,9 +721,9 @@ function feed() {
       } else {
         console.log('开始喂食......')
         let lkt = new Date().getTime()
-        let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+        let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
         $.get({
-          url: `https://jdjoy.jd.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+          url: `https://jdjoy.jd.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5&invokeKey=RtKLB8euDo7KwsO0`,
           headers: {
             'lkt': lkt,
             'lks': lks,
@@ -763,9 +754,9 @@ function feed() {
 function award(taskType) {
   return new Promise(resolve => {
     let lkt = new Date().getTime()
-    let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.get({
-      url: `https://jdjoy.jd.com/common/pet/getFood?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P&taskType=${taskType}`,
+      url: `https://jdjoy.jd.com/common/pet/getFood?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0&taskType=${taskType}`,
       headers: {
         'lkt': lkt,
         'lks': lks,
@@ -796,9 +787,9 @@ function run(fn = 'match') {
   let level = process.env.JD_JOY_teamLevel ? process.env.JD_JOY_teamLevel : 2
   return new Promise(resolve => {
     let lkt = new Date().getTime()
-    let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.get({
-      url: `https://jdjoy.jd.com/common/pet/combat/${fn}?teamLevel=${level}&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+      url: `https://jdjoy.jd.com/common/pet/combat/${fn}?teamLevel=${level}&reqSource=h5&invokeKey=RtKLB8euDo7KwsO0`,
       headers: {
         'lkt': lkt,
         'lks': lks,
@@ -850,9 +841,9 @@ function run(fn = 'match') {
 function getFriends() {
   return new Promise((resolve) => {
     let lkt = new Date().getTime()
-    let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+    let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.post({
-      url: 'https://jdjoy.jd.com/common/pet/enterRoom/h5?invitePin=&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P',
+      url: 'https://jdjoy.jd.com/common/pet/enterRoom/h5?invitePin=&reqSource=h5&invokeKey=RtKLB8euDo7KwsO0',
       headers: {
         'lkt': lkt,
         'lks': lks,
@@ -875,7 +866,7 @@ function getFriends() {
           break
         }
         $.get({
-          url: 'https://jdjoy.jd.com/common/pet/h5/getFriends?itemsPerPage=20&currentPage=1&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P',
+          url: 'https://jdjoy.jd.com/common/pet/h5/getFriends?itemsPerPage=20&currentPage=1&reqSource=h5&invokeKey=RtKLB8euDo7KwsO0',
           headers: {
             'Host': 'jdjoy.jd.com',
             'Accept': '*/*',
@@ -890,9 +881,9 @@ function getFriends() {
               if (f.stealStatus === 'can_steal') {
                 console.log('可偷:', f.friendPin)
                 let lkt = new Date().getTime()
-                let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+                let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
                 $.get({
-                  url: `https://jdjoy.jd.com/common/pet/enterFriendRoom?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P&friendPin=${encodeURIComponent(f.friendPin)}`,
+                  url: `https://jdjoy.jd.com/common/pet/enterFriendRoom?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0&friendPin=${encodeURIComponent(f.friendPin)}`,
                   headers: {
                     'lkt': lkt,
                     'lks': lks,
@@ -904,9 +895,9 @@ function getFriends() {
                   }
                 }, (err, resp, data) => {
                   let lkt = new Date().getTime()
-                  let lks = md5('' + 'ztmFUCxcPMNyUq0P' + lkt).toString()
+                  let lks = md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
                   $.get({
-                    url: `https://jdjoy.jd.com/common/pet/getRandomFood?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P&friendPin=${encodeURIComponent(f.friendPin)}`,
+                    url: `https://jdjoy.jd.com/common/pet/getRandomFood?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0&friendPin=${encodeURIComponent(f.friendPin)}`,
                     headers: {
                       'lkt': lkt,
                       'lks': lks,
@@ -951,51 +942,6 @@ function requireConfig() {
     }
     console.log(`共${cookiesArr.length}个京东账号\n`)
     resolve()
-  })
-}
-
-function TotalBean() {
-  return new Promise(resolve => {
-    const options = {
-      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
-      "headers": {
-        "Accept": "application/json,text/plain, */*",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "zh-cn",
-        "Connection": "keep-alive",
-        "Cookie": cookie,
-        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
-      }
-    }
-    $.post(options, (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (data) {
-            data = JSON.parse(data);
-            if (data['retcode'] === 13) {
-              $.isLogin = false; //cookie过期
-              return
-            }
-            if (data['retcode'] === 0) {
-              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
-            } else {
-              $.nickName = $.UserName
-            }
-          } else {
-            console.log(`京东服务器返回空数据`)
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
   })
 }
 
